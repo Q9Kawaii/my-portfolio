@@ -71,14 +71,15 @@ export default function About() {
 
           {/* Skill pills */}
           <div className="flex flex-wrap gap-2">
-            {items.map((item: string, i: number) => (
-              <span
-                key={i}
-                className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm hover:bg-white/20 transition"
-              >
-                {item}
-              </span>
-            ))}
+            {(items as string[]).map((item: string, i: number) => (
+  <span
+    key={i}
+    className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm hover:bg-white/20 transition"
+  >
+    {item}
+  </span>
+))}
+
           </div>
         </div>
       ))}

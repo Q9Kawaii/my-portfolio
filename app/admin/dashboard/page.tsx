@@ -48,11 +48,20 @@ const [about, setAbout] = useState<AboutData>({
 
   // Fetch About Data
   useEffect(() => {
-    (async () => {
-      const snap = await getDoc(doc(db, "about", "main"));
-      if (snap.exists()) setAbout(snap.data());
-    })();
-  }, []);
+  (async () => {
+    const snap = await getDoc(doc(db, "about", "main"));
+    if (snap.exists()) {
+      const data = snap.data() as Partial<AboutData>;
+      setAbout({
+        bio: data.bio || "",
+        skills: data.skills || {},
+        experience: data.experience || [],
+        education: data.education || [],
+      });
+    }
+  })();
+}, []);
+
 
   const saveAbout = async () => {
     await setDoc(doc(db, "about", "main"), about);
@@ -538,56 +547,58 @@ const [about, setAbout] = useState<AboutData>({
           placeholder="example.jpg"
         />
 
-        {/* 🏆 Awards Section */}
         <label className="block font-medium mt-3">Awards (optional)</label>
-        <div className="space-y-2 mt-2">
-          {(p.awards || []).map((award, idx) => (
-            <div key={idx} className="flex items-center gap-2">
-              <input
-                value={award}
-                onChange={(e) => {
-                  const newAwards = [...(p.awards || [])];
-                  newAwards[idx] = e.target.value;
-                  setProjects(
-                    projects.map((x) =>
-                      x.id === p.id ? { ...x, awards: newAwards } : x
-                    )
-                  );
-                }}
-                className="w-full p-2 bg-transparent border-b"
-              />
-              <button
-                onClick={() => {
-                  const newAwards = (p.awards || []).filter(
-                    (_, i) => i !== idx
-                  );
-                  setProjects(
-                    projects.map((x) =>
-                      x.id === p.id ? { ...x, awards: newAwards } : x
-                    )
-                  );
-                }}
-                className="text-red-500 hover:text-red-400 text-xs"
-              >
-                ✕
-              </button>
-            </div>
-          ))}
+<div className="space-y-2 mt-2">
+  {(p.awards ?? []).map((award: string, idx: number) => (
+    <div key={idx} className="flex items-center gap-2">
+      <input
+        value={award}
+        onChange={(e) => {
+          const newAwards: string[] = [...(p.awards ?? [])];
+          newAwards[idx] = e.target.value;
 
-          <button
-            onClick={() => {
-              const newAwards = [...(p.awards || []), "New Award"];
-              setProjects(
-                projects.map((x) =>
-                  x.id === p.id ? { ...x, awards: newAwards } : x
-                )
-              );
-            }}
-            className="mt-2 px-2 py-1 bg-white/10 rounded text-sm hover:bg-white/20"
-          >
-            + Add Award
-          </button>
-        </div>
+          setProjects(
+            projects.map((x) =>
+              x.id === p.id ? { ...x, awards: newAwards } : x
+            )
+          );
+        }}
+        className="w-full p-2 bg-transparent border-b"
+      />
+      <button
+        type="button"
+        onClick={() => {
+          const newAwards = (p.awards ?? []).filter((_award: string, i: number) => i !==idx);
+
+          setProjects(
+            projects.map((x) =>
+              x.id === p.id ? { ...x, awards: newAwards } : x
+            )
+          );
+        }}
+        className="text-red-500 hover:text-red-400 text-xs"
+      >
+        ✕
+      </button>
+    </div>
+  ))}
+
+  <button
+    type="button"
+    onClick={() => {
+      const newAwards = [...(p.awards ?? []), "New Award"];
+      setProjects(
+        projects.map((x) =>
+          x.id === p.id ? { ...x, awards: newAwards } : x
+        )
+      );
+    }}
+    className="mt-2 px-2 py-1 bg-white/10 rounded text-sm hover:bg-white/20"
+  >
+    + Add Award
+  </button>
+</div>
+
 
         {/* Preview */}
         <div className="mt-3">

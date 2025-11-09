@@ -34,13 +34,17 @@ export default function Projects() {
               <p className="text-gray-300 mt-2">{p.description}</p>
               {p.awards && p.awards.length > 0 && (
   <ul className="mt-3 space-y-1">
-    {p.awards.map((award, i) => (
-      <li key={i} className="text-yellow-400 text-sm font-medium flex items-center gap-1">
+    {p.awards.map((award: string, i: number) => (
+      <li
+        key={i}
+        className="text-yellow-400 text-sm font-medium flex items-center gap-1"
+      >
         🏆 {award}
       </li>
     ))}
   </ul>
 )}
+
 
               <div className="mt-4 flex gap-3">
                 {p.link && (
