@@ -10,54 +10,91 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50 border-b border-white/10 text-xl p-2">
-      <div className="w-full flex items-center justify-between py-4 px-6 md:px-12">
-        {/* Brand */}
-        <h1
-          onClick={() => scrollTo("hero")}
-          className="text-4xl font-bold cursor-pointer"
-        >
-          Yash.
-        </h1>
+    <>
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 w-full bg-black/70 backdrop-blur-md z-50 border-b border-white/10">
+        <div className="flex items-center justify-between px-6 md:px-12 h-16">
+          {/* Brand */}
+          <h1
+            onClick={() => scrollTo("hero")}
+            className="text-3xl font-bold cursor-pointer"
+          >
+            Yash.
+          </h1>
 
-        {/* Hamburger for mobile */}
+          {/* Desktop nav */}
+          <ul className="hidden md:flex gap-8 items-center text-lg font-medium">
+            {["about", "projects", "contact"].map((section) => (
+              <li
+                key={section}
+                onClick={() => scrollTo(section)}
+                className="cursor-pointer text-gray-300 hover:text-[--color-accent] transition"
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </li>
+            ))}
+            <li>
+              <a
+                href="/images/stock/cv.pdf"
+                download
+                className="px-4 py-2 bg-white/30 text-black font-bold rounded-md hover:bg-[var(--color-hehe)] transition"
+              >
+                Download CV
+              </a>
+            </li>
+          </ul>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setOpen(true)}
+            className="md:hidden text-2xl"
+          >
+            ☰
+          </button>
+        </div>
+      </nav>
+
+      {/* Overlay */}
+      <div
+        onClick={() => setOpen(false)}
+        className={`fixed inset-0 bg-black/60 z-40 transition-opacity ${
+          open ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      />
+
+      {/* Slide-in menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-72 bg-black z-50 p-6 transform transition-transform duration-300 ease-in-out
+        ${open ? "translate-x-0" : "translate-x-full"}`}
+      >
+        {/* Close */}
         <button
-          className="md:hidden text-gray-300"
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen(false)}
+          className="text-2xl absolute top-4 right-4"
         >
-          ☰
+          ✕
         </button>
 
-        {/* Nav links */}
-        <ul
-          className={`md:flex gap-8 items-center font-medium ${
-            open
-              ? "absolute top-14 left-0 bg-black w-full py-4"
-              : "hidden md:flex"
-          }`}
-        >
+        <ul className="mt-16 flex flex-col gap-6 text-xl">
           {["about", "projects", "contact"].map((section) => (
             <li
               key={section}
-              className="cursor-pointer hover:text-[--color-accent] text-gray-300 transition"
               onClick={() => scrollTo(section)}
+              className="cursor-pointer text-gray-300 hover:text-[--color-accent] transition"
             >
               {section.charAt(0).toUpperCase() + section.slice(1)}
             </li>
           ))}
 
-          {/* Download CV Button */}
-          <li>
-            <a
-              href="/images/stock/cv.pdf"
-              download
-              className="px-4 py-2 bg-white/[0.3] text-black font-bold rounded-md hover:bg-[var(--color-hehe)] hover:text-black transition"
-            >
-              Download CV
-            </a>
-          </li>
+          <a
+            href="/images/stock/cv.pdf"
+            download
+            className="mt-4 inline-block px-4 py-2 bg-white/30 text-black font-bold rounded-md hover:bg-[var(--color-hehe)] transition"
+          >
+            Download CV
+          </a>
         </ul>
       </div>
-    </nav>
+    </>
   );
 }
