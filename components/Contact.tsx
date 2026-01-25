@@ -66,7 +66,7 @@ export default function Contact() {
           {/* Social Links */}
           <div className="flex gap-6 text-xl mt-6">
             <a
-              href="https://www.instagram.com/technoslive_/"
+              href="https://www.instagram.com/q9kawaii/"
               target="_blank"
               rel="noreferrer"
               className="hover:text-[--color-accent] transition"
