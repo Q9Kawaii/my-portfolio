@@ -17,7 +17,7 @@ export default function Navbar() {
           {/* Brand */}
           <h1
             onClick={() => scrollTo("hero")}
-            className="text-3xl font-bold cursor-pointer"
+            className="text-3xl font-bold cursor-pointer text-white "
           >
             Yash.
           </h1>
