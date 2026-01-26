@@ -111,6 +111,7 @@ const [about, setAbout] = useState<AboutData>({
       title: "New Award",
       description: "Describe your award or achievement",
       imageFile: "",
+      link: "",
     });
     location.reload();
   };
@@ -678,6 +679,21 @@ const [about, setAbout] = useState<AboutData>({
                 }
                 className="w-full p-2 bg-transparent border-b h-20 resize-none focus:outline-none"
               />
+
+              <label className="block font-medium">Link (optional)</label>
+<input
+  value={a.link || ""}
+  onChange={(e) =>
+    setAwards(
+      awards.map((x) =>
+        x.id === a.id ? { ...x, link: e.target.value } : x
+      )
+    )
+  }
+  className="w-full p-2 bg-transparent border-b focus:outline-none"
+  placeholder="https://certificate-link.com"
+/>
+
 
               <label className="block font-medium">
                 Image Filename (in <code>/public/images/awards/</code>)
