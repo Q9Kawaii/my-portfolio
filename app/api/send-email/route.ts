@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     const data = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>", // Change later to verified domain
-      to: "yashdingar24@gmail.com", // your inbox
+      to: "yashdingar17@gmail.com", // your inbox
       subject: `New message from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
