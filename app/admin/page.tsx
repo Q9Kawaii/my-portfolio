@@ -17,7 +17,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="p-8 bg-white/5 rounded-xl">
-        <h2 className="text-2xl mb-4">Admin Login</h2>
+        <h2 className="text-2xl mb-4 text-white">Admin Login</h2>
         <button
           onClick={handleGoogle}
           className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg"
