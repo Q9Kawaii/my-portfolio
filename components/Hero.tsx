@@ -26,11 +26,10 @@ export default function Hero() {
             Hi, I'm <span className="text-[var(--color-hehe)]">Yash Dingar</span>
           </h1>
           <p className="text-gray-400 text-base sm:text-lg lg:text-xl leading-relaxed mb-6">
-          Frontend Developer · Student · Passionate about creating immersive
-          digital experiences with{" "}
-          <span className="text-[var(--color-hehe)] font-medium">React</span>,{" "}
+          Developer focused on  <span className="text-[var(--color-hehe)] font-medium">secure systems</span>, modern web, and longterm engineering depth.{" "}
+          {/* <span className="text-[var(--color-hehe)] font-medium">React</span>,{" "}
           <span className="text-[var(--color-hehe)] font-medium">Next.js</span>, and modern
-          web technologies.
+          web technologies. */}
         </p>
         </div>
       </div>
