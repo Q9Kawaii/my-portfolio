@@ -4,10 +4,13 @@ import { getCollection } from "@/lib/firestoreHelpers";
 
 export default function Services() {
   const [services, setServices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      setServices(await getCollection("services"));
+      const data = await getCollection("services");
+      setServices(data);
+      setLoading(false);
     })();
   }, []);
 
@@ -22,7 +25,29 @@ export default function Services() {
 
       {/* --- GRID --- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-        {services.length > 0 ? (
+        
+        {/* ---------- SKELETON ---------- */}
+        {loading ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="p-8 bg-white/5 border border-white/10 rounded-2xl animate-pulse flex flex-col gap-5"
+            >
+              {/* icon skeleton */}
+              <div className="w-16 h-16 rounded-xl bg-white/10" />
+
+              {/* title skeleton */}
+              <div className="h-6 bg-white/10 rounded w-2/3" />
+
+              {/* text skeleton */}
+              <div className="space-y-2">
+                <div className="h-4 bg-white/10 rounded w-full" />
+                <div className="h-4 bg-white/10 rounded w-5/6" />
+                <div className="h-4 bg-white/10 rounded w-2/3" />
+              </div>
+            </div>
+          ))
+        ) : services.length > 0 ? (
           services.map((s) => (
             <div
               key={s.id}

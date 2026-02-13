@@ -17,16 +17,51 @@ export default function About() {
   }, []);
 
   if (!aboutData) {
-    return (
-      <section
-        id="about"
-        className="py-20 text-center bg-[--color-section-dark] text-white"
-      >
-        <h2 className="text-4xl font-bold mb-4">About Me</h2>
-        <p className="text-gray-400">Loading...</p>
-      </section>
-    );
-  }
+  return (
+    <section
+      id="about"
+      className="w-full py-28 px-6 sm:px-10 bg-[--color-section-dark] text-white flex justify-center items-center"
+    >
+      <div className="flex flex-col md:flex-row items-center justify-center gap-16 w-full max-w-7xl animate-pulse">
+
+        {/* IMAGE SKELETON */}
+        <div className="w-full md:w-[45%] flex justify-center">
+          <div className="w-[85%] md:w-[90%] max-w-[480px] h-[420px] rounded-2xl bg-white/10" />
+        </div>
+
+        {/* TEXT SKELETON */}
+        <div className="w-full md:w-[55%] space-y-6">
+          
+          {/* title */}
+          <div className="h-10 w-48 bg-white/10 rounded" />
+
+          {/* bio lines */}
+          <div className="space-y-3">
+            <div className="h-4 bg-white/10 rounded w-full" />
+            <div className="h-4 bg-white/10 rounded w-11/12" />
+            <div className="h-4 bg-white/10 rounded w-10/12" />
+            <div className="h-4 bg-white/10 rounded w-9/12" />
+          </div>
+
+          {/* tabs */}
+          <div className="flex gap-4 pt-4">
+            <div className="h-6 w-20 bg-white/10 rounded" />
+            <div className="h-6 w-24 bg-white/10 rounded" />
+            <div className="h-6 w-20 bg-white/10 rounded" />
+          </div>
+
+          {/* skills pills */}
+          <div className="flex flex-wrap gap-3 pt-4">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="h-8 w-24 bg-white/10 rounded-full" />
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
 
   return (
     <section

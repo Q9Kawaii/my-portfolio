@@ -4,10 +4,13 @@ import { getCollection } from "@/lib/firestoreHelpers";
 
 export default function Awards() {
   const [awards, setAwards] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      setAwards(await getCollection("awards"));
+      const data = await getCollection("awards");
+      setAwards(data);
+      setLoading(false);
     })();
   }, []);
 
@@ -22,7 +25,27 @@ export default function Awards() {
 
       {/* --- GRID --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-        {awards.length > 0 ? (
+        
+        {/* ---------- SKELETON LOADING ---------- */}
+        {loading ? (
+          Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden animate-pulse"
+            >
+              <div className="w-full h-[240px] bg-white/10" />
+              <div className="p-6 space-y-4">
+                <div className="h-6 bg-white/10 rounded w-3/4" />
+                <div className="space-y-2">
+                  <div className="h-4 bg-white/10 rounded w-full" />
+                  <div className="h-4 bg-white/10 rounded w-5/6" />
+                  <div className="h-4 bg-white/10 rounded w-2/3" />
+                </div>
+                <div className="h-4 bg-white/10 rounded w-32 mt-3" />
+              </div>
+            </div>
+          ))
+        ) : awards.length > 0 ? (
           awards.map((a) => (
             <div
               key={a.id}
