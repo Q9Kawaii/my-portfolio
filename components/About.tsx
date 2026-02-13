@@ -69,7 +69,7 @@ export default function About() {
 
           {/* --- SKILLS --- */}
           {activeTab === "skills" && (
-            <div className="text-gray-300 max-h-[320px] space-y-8">
+            <div className="text-gray-300 max-h-[320px] overflow-y-auto pr-2 space-y-8">
               {aboutData.skills &&
                 Object.entries(aboutData.skills).map(([category, items]) => (
                   <div key={category}>
