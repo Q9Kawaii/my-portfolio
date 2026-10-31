@@ -1,55 +1,142 @@
 @import "tailwindcss";
 
-/* ---------- GLOBAL COLOR SYSTEM ---------- */
-
+/* High-contrast dark palette. Body copy (--muted) stays above 10:1 on --bg. */
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --accent: #4682B4;
-  --accent-dark: #ff6700;
-  --accent-light: #ffa64d;
-  --section-dark: #0a0a0a;
-  --section-card: #141414;
-  --color-hehe: var(--accent);
+  --bg: #07080c;
+  --surface: #0e1118;
+  --surface-2: #151a24;
+  --line: #262d3d;
+  --text: #f5f7fb;
+  --muted: #c5ccd8;
+  --accent: #7cf0c5;
+  --accent-2: #9db2ff;
+  --danger: #ff8a8a;
+  color-scheme: dark;
 }
 
-/* ---------- TAILWIND THEME CONFIG ---------- */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-dark: var(--accent-dark);
-  --color-accent-light: var(--accent-light);
-  --color-section-dark: var(--section-dark);
-  --color-section-card: var(--section-card);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-accent-2: var(--accent-2);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
 }
 
-
-/* ---------- BASE STYLES ---------- */
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
-/* ---------- MODERN SCROLLBAR ---------- */
-::-webkit-scrollbar {
-  width: 8px;
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Subtle grid backdrop behind the page */
+.backdrop-grid {
+  background-image:
+    radial-gradient(60rem 40rem at 85% -10%, rgb(124 240 197 / 0.10), transparent 60%),
+    radial-gradient(50rem 35rem at -10% 20%, rgb(157 178 255 / 0.10), transparent 60%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: auto, auto, 56px 56px, 56px 56px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--color-hehe);
-  border-radius: 9999px;
-  transition: background 0.3s ease;
+::selection {
+  background: var(--accent);
+  color: #04110c;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, var(--accent-light), var(--accent));
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2b3345; border-radius: 9999px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: #3a455d; }
+
+/* Intro overlay: hidden unless the boot script opted in (first visit this session). */
+.intro-overlay { display: none; }
+html[data-intro="play"] .intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(40rem 30rem at 50% 50%, rgb(124 240 197 / 0.10), transparent 70%),
+    var(--bg);
+  /* The curtain wipe ends the intro on its own, with or without JS. */
+  animation: intro-curtain 0.55s var(--ease-io) 1.95s both;
+}
+.intro-overlay { --ease-io: cubic-bezier(0.65, 0, 0.35, 1); }
+
+/* Timeline (s): particles + rays 0–0.95 · ring 0.45–1.25 · monogram 0.6–1.35 ·
+   fill/name 1.25–1.7 · role 1.4–1.8 · lift + curtain 1.95–2.5 */
+.intro-ray {
+  position: absolute; left: 50%; top: 50%; height: 1px; width: 60vmax;
+  transform-origin: left center; opacity: 0;
+  background: linear-gradient(90deg, transparent, rgb(124 240 197 / 0.8));
+  transform: rotate(var(--r)) scaleX(0);
+  animation: intro-ray 0.9s var(--ease-io) 0.05s both;
+}
+.intro-particle {
+  position: absolute; left: 50%; top: 50%; border-radius: 9999px; opacity: 0;
+  box-shadow: 0 0 8px currentColor;
+  transform: translate(var(--x), var(--y));
+  animation: intro-converge 0.95s var(--ease-io) var(--d) both;
+}
+.intro-ring { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: intro-draw 0.8s var(--ease-io) 0.45s both; }
+.intro-stroke { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: intro-draw 0.75s var(--ease-io) 0.6s both; }
+.intro-fill { opacity: 0; animation: intro-fade 0.3s ease-out 1.25s both; }
+.intro-name { opacity: 0; animation: intro-rise 0.4s ease-out 1.25s both; }
+.intro-role { opacity: 0; animation: intro-rise 0.4s ease-out 1.4s both; }
+.intro-content { animation: intro-lift 0.35s ease-in 1.95s both; }
+/* Only run while the overlay is shown. */
+html:not([data-intro="play"]) .intro-overlay * { animation: none; }
+
+@keyframes intro-curtain {
+  from { clip-path: inset(0 0 0 0); }
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+@keyframes intro-ray {
+  0% { transform: rotate(var(--r)) scaleX(0); opacity: 0; }
+  50% { transform: rotate(var(--r)) scaleX(1); opacity: 0.9; }
+  100% { transform: rotate(var(--r)) scaleX(0); opacity: 0; }
+}
+@keyframes intro-converge {
+  0% { transform: translate(var(--x), var(--y)) scale(1); opacity: 0; }
+  30% { opacity: 1; }
+  85% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+  100% { transform: translate(0, 0) scale(0); opacity: 0; }
+}
+@keyframes intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes intro-fade { to { opacity: 1; } }
+@keyframes intro-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes intro-lift { to { opacity: 0; transform: translateY(-24px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-intro="play"] .intro-overlay { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
