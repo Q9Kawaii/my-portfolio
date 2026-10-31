@@ -1,0 +1,50 @@
+rules_version = '2';
+
+// Public portfolio: anyone can read, only the verified admin account can write.
+// Keep the email in sync with NEXT_PUBLIC_ADMIN_EMAILS.
+// Deploy with: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'yashdingar17@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    function isPublicCollection(col) {
+      return col in [
+        'portfolio',
+        'portfolioProjects',
+        'portfolioSkills',
+        'portfolioExperience',
+        'portfolioEducation',
+        'portfolioAwards',
+        'portfolioGraphLinks',
+        // Legacy collections from the previous site, kept readable until cleaned up.
+        'projects',
+        'awards',
+        'services',
+        'about'
+      ];
+    }
+
+    // Contact-form backups. Written only by the server (Admin SDK bypasses rules);
+    // only the admin can read. Mark-read/delete also go through the server.
+    match /messages/{docId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Admin-only data, e.g. the phone number while it is hidden from the public site.
+    match /portfolioPrivate/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Top-level documents only; no subcollections are used.
+    // Anything not matched here (other collections, subcollections) is denied by default.
+    match /{col}/{docId} {
+      allow read: if isPublicCollection(col);
+      allow write: if isPublicCollection(col) && isAdmin();
+    }
+  }
+}
