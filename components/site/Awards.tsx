@@ -5,7 +5,7 @@ import { Section, SmartImage } from "./ui";
 export default function Awards({ awards }: { awards: Award[] }) {
   if (!awards.length) return null;
   return (
-    <Section id="awards" eyebrow="04 / Awards" title="Awards & certifications">
+    <Section id="awards" eyebrow="04 / Awards" title="Awards & Certifications">
       <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {awards.map((a) => (
           <li key={a.id}>

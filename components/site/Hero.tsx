@@ -23,8 +23,8 @@ export default function Hero({ s }: { s: SiteSettings }) {
           </div>
         </div>
 
-        {/* Square frame; HeroScene fits the camera so the atom never touches the edges. */}
-        <div className="size-44 shrink-0 self-center sm:size-56 md:size-64">
+        {/* Square frame; HeroScene fits the camera so the computer never touches the edges. */}
+        <div className="size-72 shrink-0 self-center sm:size-80 md:size-96">
           <HeroCanvas />
         </div>
       </div>

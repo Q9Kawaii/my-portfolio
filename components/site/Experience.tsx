@@ -6,7 +6,7 @@ const ROW = "grid gap-2 border-t-2 border-line py-8 md:grid-cols-[180px_1fr] md:
 
 export default function Experience({ experience, education }: { experience: Exp[]; education: Education[] }) {
   return (
-    <Section id="experience" eyebrow="03 / Experience" title="Experience & education">
+    <Section id="experience" eyebrow="03 / Experience" title="Experience & Education">
       {experience.length > 0 && (
         <>
           <h3 className="label">Work</h3>
