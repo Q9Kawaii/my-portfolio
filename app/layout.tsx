@@ -26,8 +26,11 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", creator: "@q9kawaii" },
   // Pixel "YD" tab icon in each theme's colours; ThemeToggle keeps it in sync with the site toggle.
+  // The plain PNG (and app/favicon.ico) are for Google Search and other crawlers, which
+  // need an unconditional icon that's a multiple of 48px.
   icons: {
     icon: [
+      { url: "/favicon-192.png", type: "image/png", sizes: "192x192" },
       { url: "/icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
       { url: "/icon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
     ],
