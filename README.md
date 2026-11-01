@@ -7,7 +7,7 @@ Personal portfolio showcasing my full-stack and security projects.
 ## Built with
 
 - Next.js 16 (App Router), React and TypeScript
-- Tailwind CSS 4, React Three Fiber, Framer Motion, d3-force
+- Tailwind CSS 4, React Three Fiber, Framer Motion
 - Firebase (Auth + Firestore), Vercel Blob, Web3Forms
 
 ## Featured work
@@ -18,10 +18,10 @@ Personal portfolio showcasing my full-stack and security projects.
 
 ## Features
 
-- **Interactive 3D:** a draggable hero object (mouse, touch or arrow keys) and cards that tilt toward the cursor. three.js is lazy-loaded, pauses when off-screen and respects `prefers-reduced-motion`.
-- **Intro animation:** about 2.5 s, plays once per session and is skipped for reduced motion. It's pure CSS that starts at first paint; a tiny script handles Skip/Esc. Content renders underneath, so SEO is unaffected.
-- **Career knowledge graph:** a d3-force canvas graph built from the same Firestore content (`lib/graph.ts`). Projects, awards and education link to skills through their `tech`/`tags`; extra links come from `portfolioGraphLinks` (Admin → Graph connections). It supports drag, zoom, pan, search, group filters, path tracing and a list view, and is lazy-loaded when scrolled near.
-- **Masonry layout** for skills, projects and awards. It is row-major and keeps DOM order, so keyboard and screen-reader order match what you see.
+- **Retro, flat design:** Space Mono / IBM Plex Sans, 2px borders and hard offset shadows. Light (cream + rust) and dark (charcoal + amber) themes follow the system setting, remember the visitor's choice and never flash on load.
+- **Hero atom:** one small draggable 3D atom (mouse, touch or arrow keys). three.js is lazy-loaded, pauses when off-screen and respects `prefers-reduced-motion`.
+- **Intro:** a ~1 s typed terminal line, once per session, skippable (Skip/Esc) and skipped for reduced motion. Pure CSS from first paint, so SEO is unaffected.
+- **Projects:** featured projects first, the rest behind a Show more button.
 - **Content managed from `/admin`:** profile, social links, CV, projects (featured / hidden / order), skills, experience, education and awards. Saving updates the live site within seconds with no redeploy.
 - **Contact form:** each message is emailed via Web3Forms straight from the browser and backed up to Firestore `messages` through `/api/messages` (validated and rate-limited). It counts as sent if either succeeds. You can read, mark and delete messages in Admin → Messages.
 
@@ -43,8 +43,8 @@ Until the admin clicks **Import defaults** once, the site renders the built-in c
 | `portfolioProjects` | Projects (`featured`, `hidden`, `order`, `isPrivate`, …) |
 | `portfolioSkills` | Skill groups |
 | `portfolioExperience` / `portfolioEducation` | Timeline |
-| `portfolioAwards` | Awards & certificates (`kind`, `tags` for the graph) |
-| `portfolioGraphLinks` | Manual knowledge-graph connections (`source`, `target`, `label`) |
+| `portfolioAwards` | Awards & certificates |
+| `portfolioGraphLinks` | Legacy knowledge-graph links (no longer used by the site) |
 | `portfolioPrivate` | Admin-only (e.g. the phone number while hidden) |
 | `messages` | Contact-form backups; server writes only, admin reads |
 
@@ -93,7 +93,7 @@ app/
   api/messages          contact backup (POST) + admin mark-read/delete
   api/upload            admin uploads → Vercel Blob
   api/revalidate        admin save → refresh live page
-components/site/        Hero, 3D scene, TiltCard, Masonry, sections
+components/site/        Hero, 3D atom, sections
 components/admin/       Editors and form fields
 lib/                    types, defaults, Firestore reader, auth helpers
 firestore.rules         Firestore security rules
