@@ -1,4 +1,4 @@
-import { Download, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import type { SiteSettings } from "@/lib/types";
 import ContactForm from "./ContactForm";
 import SocialLinks from "./SocialLinks";
@@ -8,37 +8,29 @@ export default function Contact({ s }: { s: SiteSettings }) {
   return (
     <Section
       id="contact"
-      eyebrow="07 / Contact"
-      title="Let's build something secure"
+      eyebrow="05 / Contact"
+      title="Get in touch"
       intro="Hiring for an internship, or want to talk about a project? Send a message and I'll get back to you."
     >
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-        <div className="space-y-4">
+      <div className="grid gap-12 md:grid-cols-[1fr_1.5fr]">
+        <div className="space-y-5">
           <a
             href={`mailto:${s.email}`}
-            className="flex items-center gap-3 rounded-xl border border-line bg-surface p-4 text-text transition hover:border-accent"
+            className="flex items-center gap-3 break-all font-display text-sm text-text underline-offset-4 hover:text-accent hover:underline"
           >
-            <Mail className="text-accent" size={20} aria-hidden />
-            <span className="break-all">{s.email}</span>
+            <Mail className="shrink-0 text-accent" size={18} aria-hidden />
+            {s.email}
           </a>
           {s.showPhone && s.phone && (
             <a
               href={`tel:${s.phone.replace(/[^+\d]/g, "")}`}
-              className="flex items-center gap-3 rounded-xl border border-line bg-surface p-4 text-text transition hover:border-accent"
+              className="flex items-center gap-3 font-display text-sm text-text underline-offset-4 hover:text-accent hover:underline"
             >
-              <Phone className="text-accent" size={20} aria-hidden />
+              <Phone className="shrink-0 text-accent" size={18} aria-hidden />
               {s.phone}
             </a>
           )}
-          <a
-            href={s.cvUrl}
-            download
-            className="flex items-center gap-3 rounded-xl border border-line bg-surface p-4 text-text transition hover:border-accent"
-          >
-            <Download className="text-accent" size={20} aria-hidden />
-            Download CV (PDF)
-          </a>
-          <div className="pt-2">
+          <div className="pt-3">
             <SocialLinks socials={s.socials} />
           </div>
         </div>

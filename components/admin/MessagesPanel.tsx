@@ -99,7 +99,7 @@ export default function MessagesPanel({ notify }: { notify: Notify }) {
         {shown.map((m) => (
           <li
             key={m.id}
-            className={`rounded-xl border bg-surface p-5 ${m.read ? "border-line" : "border-accent/60"}`}
+            className={`border-2 bg-surface p-5 shadow-hard ${m.read ? "border-line" : "border-accent"}`}
           >
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="min-w-0">
@@ -119,7 +119,7 @@ export default function MessagesPanel({ notify }: { notify: Notify }) {
             <div className="mt-4 flex flex-wrap gap-2">
               <a
                 href={`mailto:${m.email}?subject=${encodeURIComponent("Re: your message on yashdingar.space")}`}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-bg hover:brightness-110"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px"
               >
                 <Reply size={15} aria-hidden /> Reply
               </a>
@@ -138,7 +138,7 @@ export default function MessagesPanel({ notify }: { notify: Notify }) {
                     type="button"
                     disabled={busy === m.id}
                     onClick={() => remove(m)}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-danger px-3 py-1.5 text-sm font-semibold text-bg"
+                    className="inline-flex items-center gap-1.5 rounded-lg border-2 border-line bg-danger font-display shadow-hard-sm px-3 py-1.5 text-sm font-semibold text-bg"
                   >
                     <Trash2 size={15} aria-hidden /> Confirm delete
                   </button>

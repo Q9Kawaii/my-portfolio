@@ -10,9 +10,9 @@ const ITEMS: { key: keyof Socials; label: string; Icon: typeof Github }[] = [
 ];
 
 /** Renders only the social links that have a URL set in admin settings. */
-export default function SocialLinks({ socials, size = 20 }: { socials: Socials; size?: number }) {
+export default function SocialLinks({ socials, size = 18 }: { socials: Socials; size?: number }) {
   return (
-    <ul className="flex flex-wrap items-center gap-2">
+    <ul className="flex flex-wrap items-center gap-3">
       {ITEMS.filter((i) => socials[i.key]).map(({ key, label, Icon }) => (
         <li key={key}>
           <a
@@ -21,7 +21,7 @@ export default function SocialLinks({ socials, size = 20 }: { socials: Socials; 
             rel="noopener noreferrer"
             aria-label={label}
             title={label}
-            className="grid size-11 place-items-center rounded-lg border border-line bg-surface text-text transition hover:border-accent hover:text-accent"
+            className="grid size-11 place-items-center border-2 border-line bg-surface text-text shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px hover:text-accent"
           >
             <Icon size={size} aria-hidden />
           </a>

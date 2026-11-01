@@ -1,46 +1,59 @@
-import { MapPin, ShieldCheck } from "lucide-react";
-import type { SiteSettings } from "@/lib/types";
-import TiltCard from "./TiltCard";
-import { Section, SmartImage } from "./ui";
+import { MapPin } from "lucide-react";
+import type { SiteSettings, SkillGroup } from "@/lib/types";
+import { Section, SmartImage, Tag } from "./ui";
 
-export default function About({ s }: { s: SiteSettings }) {
+export default function About({ s, skills }: { s: SiteSettings; skills: SkillGroup[] }) {
   const paragraphs = s.bio.split(/\n\s*\n/).filter(Boolean);
+  // One flat, de-duplicated tag list across all skill groups.
+  const tags = [...new Set(skills.flatMap((g) => g.items.map((i) => i.trim()).filter(Boolean)))];
+
   return (
-    <Section id="about" eyebrow="01 / About" title="Engineering with security in mind">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,320px)_1fr]">
-        <TiltCard className="overflow-hidden">
+    <Section id="about" eyebrow="01 / About" title="About me">
+      <div className="grid gap-12 md:grid-cols-[220px_1fr] md:gap-16">
+        <div className="max-w-[220px]">
           {s.avatar && (
-            <div className="relative aspect-[4/5] w-full">
-              <SmartImage
-                src={s.avatar}
-                alt={`Portrait of ${s.name}`}
-                fill
-                sizes="(min-width: 1024px) 320px, 100vw"
-                className="object-cover"
-              />
+            <div className="card relative aspect-square w-full overflow-hidden">
+              <SmartImage src={s.avatar} alt={`Portrait of ${s.name}`} fill sizes="220px" className="object-cover" />
             </div>
           )}
-          <div className="flex items-center gap-2 border-t border-line px-4 py-3 text-sm text-text [transform:translateZ(30px)]">
-            <MapPin size={16} className="text-accent" aria-hidden /> {s.location}
-          </div>
-        </TiltCard>
+          {s.location && (
+            <p className="mt-5 flex items-center gap-2 font-display text-sm text-text">
+              <MapPin size={15} className="text-accent" aria-hidden /> {s.location}
+            </p>
+          )}
+        </div>
 
-        <div>
-          <div className="space-y-5 text-lg leading-relaxed text-muted">
+        <div className="max-w-[62ch]">
+          <div className="space-y-5 text-lg leading-relaxed text-text">
             {paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
           </div>
+
           {s.focusAreas.length > 0 && (
-            <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+            <ul className="mt-10 space-y-3">
               {s.focusAreas.map((f) => (
-                <li key={f.title} className="rounded-xl border border-line bg-surface p-5">
-                  <ShieldCheck className="text-accent" size={22} aria-hidden />
-                  <h3 className="mt-3 font-display font-semibold text-text">{f.title}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-muted">{f.description}</p>
+                <li key={f.title} className="leading-relaxed text-muted">
+                  <span className="font-display text-sm font-bold text-text">
+                    <span className="text-accent">+</span> {f.title}
+                  </span>
+                  {f.description && <> — {f.description}</>}
                 </li>
               ))}
             </ul>
+          )}
+
+          {tags.length > 0 && (
+            <div id="skills" className="mt-12">
+              <h3 className="label">Skills &amp; tools</h3>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {tags.map((t) => (
+                  <li key={t}>
+                    <Tag>{t}</Tag>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
       </div>

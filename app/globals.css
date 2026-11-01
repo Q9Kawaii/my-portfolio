@@ -1,17 +1,59 @@
 @import "tailwindcss";
 
-/* High-contrast dark palette. Body copy (--muted) stays above 10:1 on --bg. */
+/*
+ * Retro / flat palette. Light = cream paper + ink + rust brown; dark = charcoal + off-white + amber.
+ * Body copy (--muted) stays above 9:1 and the accent above 6:1 against --bg in both themes.
+ * The theme is set on <html data-theme> by an inline script before first paint (see app/layout.tsx).
+ */
 :root {
-  --bg: #07080c;
-  --surface: #0e1118;
-  --surface-2: #151a24;
-  --line: #262d3d;
-  --text: #f5f7fb;
-  --muted: #c5ccd8;
-  --accent: #7cf0c5;
-  --accent-2: #9db2ff;
-  --danger: #ff8a8a;
+  --bg: #f4efe4;
+  --surface: #fbf8f1;
+  --surface-2: #ebe4d5;
+  --line: #1c1b19;
+  --line-soft: #c9c0ae;
+  --text: #141414;
+  --muted: #3b3833;
+  --accent: #8a3324;
+  --on-accent: #fbf8f1;
+  --danger: #a1122e;
+  --warn: #9a5b00;
+  --shadow: #141414;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #1b1b1d;
+  --surface: #232326;
+  --surface-2: #2d2d31;
+  --line: #8f897d;
+  --line-soft: #46443f;
+  --text: #f4f1ea;
+  --muted: #dad5ca;
+  --accent: #ffb000;
+  --on-accent: #1b1b1d;
+  --danger: #ff8f80;
+  --warn: #ffcc66;
+  --shadow: #000000;
   color-scheme: dark;
+}
+
+/* No-JS fallback: follow the system theme. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #1b1b1d;
+    --surface: #232326;
+    --surface-2: #2d2d31;
+    --line: #8f897d;
+    --line-soft: #46443f;
+    --text: #f4f1ea;
+    --muted: #dad5ca;
+    --accent: #ffb000;
+    --on-accent: #1b1b1d;
+    --danger: #ff8f80;
+    --warn: #ffcc66;
+    --shadow: #000000;
+    color-scheme: dark;
+  }
 }
 
 @theme inline {
@@ -19,14 +61,26 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
   --color-text: var(--text);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
+  --color-on-accent: var(--on-accent);
   --color-danger: var(--danger);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
-  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --color-warn: var(--warn);
+  --font-sans: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-mono), ui-monospace, monospace;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+  --font-pixel: var(--font-vt323), ui-monospace, monospace;
+  /* Flat, squared-off corners everywhere (admin included). */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 4px;
+  --radius-2xl: 6px;
+  --shadow-hard: 4px 4px 0 0 var(--shadow);
+  --shadow-hard-sm: 2px 2px 0 0 var(--shadow);
+  --shadow-lg: 4px 4px 0 0 var(--shadow);
 }
 
 html {
@@ -41,33 +95,90 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle grid backdrop behind the page */
-.backdrop-grid {
-  background-image:
-    radial-gradient(60rem 40rem at 85% -10%, rgb(124 240 197 / 0.10), transparent 60%),
-    radial-gradient(50rem 35rem at -10% 20%, rgb(157 178 255 / 0.10), transparent 60%),
-    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
-  background-size: auto, auto, 56px 56px, 56px 56px;
-}
-
 ::selection {
   background: var(--accent);
-  color: #04110c;
+  color: var(--on-accent);
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #2b3345; border-radius: 9999px; border: 2px solid var(--bg); }
-::-webkit-scrollbar-thumb:hover { background: #3a455d; }
+::placeholder {
+  color: var(--muted);
+  opacity: 0.75;
+}
 
-/* Intro overlay: hidden unless the boot script opted in (first visit this session). */
+/* Theme toggle: show the icon for the theme you'd switch to, without needing React state. */
+.theme-icon-sun { display: none; }
+:root[data-theme="dark"] .theme-icon-sun { display: block; }
+:root[data-theme="dark"] .theme-icon-moon { display: none; }
+
+@layer components {
+  .card {
+    border: 2px solid var(--line);
+    background: var(--surface);
+    box-shadow: var(--shadow-hard);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 2px solid var(--line);
+    padding: 0.7rem 1.15rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+    box-shadow: var(--shadow-hard-sm);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 0 var(--shadow);
+  }
+  .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn-ghost {
+    background: var(--surface);
+    color: var(--text);
+  }
+  .btn-sm {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--line);
+    padding: 0.2rem 0.55rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--text);
+    background: var(--bg);
+  }
+
+  .label {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+}
+
+/* ---------- Intro: ~1 s retro boot line, first visit per session only ---------- */
 .intro-overlay { display: none; }
 html[data-intro="play"] .intro-overlay {
   position: fixed;
@@ -76,63 +187,29 @@ html[data-intro="play"] .intro-overlay {
   display: flex;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(40rem 30rem at 50% 50%, rgb(124 240 197 / 0.10), transparent 70%),
-    var(--bg);
-  /* The curtain wipe ends the intro on its own, with or without JS. */
-  animation: intro-curtain 0.55s var(--ease-io) 1.95s both;
+  background: var(--bg);
+  animation: intro-out 0.2s steps(4) 0.85s both;
 }
-.intro-overlay { --ease-io: cubic-bezier(0.65, 0, 0.35, 1); }
-
-/* Timeline (s): particles + rays 0–0.95 · ring 0.45–1.25 · monogram 0.6–1.35 ·
-   fill/name 1.25–1.7 · role 1.4–1.8 · lift + curtain 1.95–2.5 */
-.intro-ray {
-  position: absolute; left: 50%; top: 50%; height: 1px; width: 60vmax;
-  transform-origin: left center; opacity: 0;
-  background: linear-gradient(90deg, transparent, rgb(124 240 197 / 0.8));
-  transform: rotate(var(--r)) scaleX(0);
-  animation: intro-ray 0.9s var(--ease-io) 0.05s both;
+.intro-type {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  vertical-align: bottom;
+  animation: intro-type 0.55s steps(var(--n)) 0.1s forwards;
 }
-.intro-particle {
-  position: absolute; left: 50%; top: 50%; border-radius: 9999px; opacity: 0;
-  box-shadow: 0 0 8px currentColor;
-  transform: translate(var(--x), var(--y));
-  animation: intro-converge 0.95s var(--ease-io) var(--d) both;
-}
-.intro-ring { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: intro-draw 0.8s var(--ease-io) 0.45s both; }
-.intro-stroke { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: intro-draw 0.75s var(--ease-io) 0.6s both; }
-.intro-fill { opacity: 0; animation: intro-fade 0.3s ease-out 1.25s both; }
-.intro-name { opacity: 0; animation: intro-rise 0.4s ease-out 1.25s both; }
-.intro-role { opacity: 0; animation: intro-rise 0.4s ease-out 1.4s both; }
-.intro-content { animation: intro-lift 0.35s ease-in 1.95s both; }
-/* Only run while the overlay is shown. */
+.intro-cursor { animation: intro-blink 0.3s steps(1) infinite; }
 html:not([data-intro="play"]) .intro-overlay * { animation: none; }
 
-@keyframes intro-curtain {
-  from { clip-path: inset(0 0 0 0); }
-  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+@keyframes intro-type { to { width: calc(var(--n) * 1ch); } }
+@keyframes intro-blink { 50% { opacity: 0; } }
+@keyframes intro-out {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
 }
-@keyframes intro-ray {
-  0% { transform: rotate(var(--r)) scaleX(0); opacity: 0; }
-  50% { transform: rotate(var(--r)) scaleX(1); opacity: 0.9; }
-  100% { transform: rotate(var(--r)) scaleX(0); opacity: 0; }
-}
-@keyframes intro-converge {
-  0% { transform: translate(var(--x), var(--y)) scale(1); opacity: 0; }
-  30% { opacity: 1; }
-  85% { transform: translate(0, 0) scale(1); opacity: 0.9; }
-  100% { transform: translate(0, 0) scale(0); opacity: 0; }
-}
-@keyframes intro-draw { to { stroke-dashoffset: 0; } }
-@keyframes intro-fade { to { opacity: 1; } }
-@keyframes intro-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-@keyframes intro-lift { to { opacity: 0; transform: translateY(-24px); } }
 
 @media (prefers-reduced-motion: reduce) {
   html[data-intro="play"] .intro-overlay { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

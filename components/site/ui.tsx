@@ -1,6 +1,9 @@
 import Image, { type ImageProps } from "next/image";
 import type { ReactNode } from "react";
 
+/** Shared page width: ~1000px content with wide side margins. */
+export const WRAP = "mx-auto w-full max-w-[1000px] px-4 sm:px-8";
+
 export function Section({
   id,
   eyebrow,
@@ -15,23 +18,19 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28">
-      <p className="font-mono text-sm tracking-wide text-accent">{eyebrow}</p>
-      <h2 id={`${id}-title`} className="mt-2 font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+    <section id={id} aria-labelledby={`${id}-title`} className={`${WRAP} py-20 md:py-32`}>
+      <p className="label">{eyebrow}</p>
+      <h2 id={`${id}-title`} className="mt-3 font-display text-2xl font-bold tracking-tight text-text sm:text-3xl">
         {title}
       </h2>
-      {intro && <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">{intro}</p>}
+      {intro && <p className="mt-4 max-w-[60ch] text-lg leading-relaxed text-muted">{intro}</p>}
       <div className="mt-12">{children}</div>
     </section>
   );
 }
 
 export function Tag({ children }: { children: ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-line bg-surface-2 px-2.5 py-1 font-mono text-xs text-text">
-      {children}
-    </span>
-  );
+  return <span className="tag">{children}</span>;
 }
 
 /** next/image that only optimizes local and Vercel Blob sources; other hosts load as-is. */

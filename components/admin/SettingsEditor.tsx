@@ -16,7 +16,7 @@ const SOCIALS: { key: keyof SocialLinks; label: string }[] = [
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <fieldset className="space-y-4 rounded-xl border border-line bg-surface p-5">
+    <fieldset className="space-y-4 border-2 border-line bg-surface shadow-hard p-5">
       <legend className="px-1 font-display text-lg font-semibold text-text">{title}</legend>
       {children}
     </fieldset>
@@ -61,7 +61,7 @@ export default function SettingsEditor({ initial, notify }: { initial: SiteSetti
           type="button"
           onClick={save}
           disabled={busy || !dirty}
-          className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg hover:brightness-110 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px disabled:opacity-50"
         >
           {busy ? <Loader2 size={16} className="animate-spin" aria-hidden /> : <Save size={16} aria-hidden />}
           {dirty ? "Save & publish" : "Saved"}

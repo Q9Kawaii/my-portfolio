@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAdmin } from "@/components/admin/useAdmin";
+import ThemeToggle from "@/components/ThemeToggle";
 import { auth } from "@/lib/firebase";
 
 export default function AdminLogin() {
@@ -32,8 +33,9 @@ export default function AdminLogin() {
   };
 
   return (
-    <main className="grid min-h-dvh place-items-center px-4">
-      <div className="w-full max-w-sm rounded-2xl border border-line bg-surface p-8 text-center">
+    <main className="relative grid min-h-dvh place-items-center px-4">
+      <ThemeToggle className="absolute right-4 top-4 sm:right-8 sm:top-6" />
+      <div className="w-full max-w-sm border-2 border-line bg-surface shadow-hard p-8 text-center">
         <span className="mx-auto grid size-12 place-items-center rounded-xl bg-accent text-bg">
           <LockKeyhole size={22} aria-hidden />
         </span>
@@ -43,7 +45,7 @@ export default function AdminLogin() {
           type="button"
           onClick={signIn}
           disabled={busy || state.status === "loading"}
-          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-3 font-semibold text-bg transition hover:brightness-110 disabled:opacity-70"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-3 font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px disabled:opacity-70"
         >
           {(busy || state.status === "loading") && <Loader2 size={18} className="animate-spin" aria-hidden />}
           Sign in with Google

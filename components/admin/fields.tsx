@@ -4,7 +4,7 @@ import { useId, useRef, useState } from "react";
 import { uploadFile } from "@/lib/admin-client";
 
 export const inputCls =
-  "w-full rounded-lg border border-line bg-surface-2 px-3 py-2.5 text-text placeholder:text-[#9aa4b5] focus:border-accent focus:outline-none";
+  "w-full border-2 border-line bg-bg px-3 py-2.5 text-text focus:border-accent focus:outline-none";
 
 function Label({ htmlFor, label, help }: { htmlFor: string; label: string; help?: string }) {
   return (

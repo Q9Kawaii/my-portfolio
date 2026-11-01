@@ -134,7 +134,7 @@ export default function ConnectionsEditor({ notify }: { notify: Notify }) {
     const n = byId.get(id);
     return (
       <span className="inline-flex items-center gap-1.5 text-text">
-        <span aria-hidden className="size-2.5 rounded-full" style={{ background: n ? GROUP_COLORS[n.group] : "#ff8a8a" }} />
+        <span aria-hidden className="size-2.5 rounded-full" style={{ background: n ? GROUP_COLORS[n.group] : "var(--danger)" }} />
         {n?.label ?? <span className="text-danger">{id} (missing)</span>}
       </span>
     );
@@ -161,7 +161,7 @@ export default function ConnectionsEditor({ notify }: { notify: Notify }) {
         never overwrites your edits.
       </p>
 
-      <fieldset className="space-y-4 rounded-xl border border-line bg-surface p-5">
+      <fieldset className="space-y-4 border-2 border-line bg-surface shadow-hard p-5">
         <legend className="px-1 font-display text-lg font-semibold text-text">Add a connection</legend>
         <div className="flex flex-col gap-4 sm:flex-row">
           <NodeSelect label="From" value={from} onChange={setFrom} nodes={selectable} />
@@ -172,7 +172,7 @@ export default function ConnectionsEditor({ notify }: { notify: Notify }) {
           type="button"
           onClick={add}
           disabled={!from || !to || from === to || busy === "add"}
-          className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg hover:brightness-110 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px disabled:opacity-50"
         >
           {busy === "add" ? <Loader2 size={16} className="animate-spin" aria-hidden /> : <Plus size={16} aria-hidden />}
           Add & publish
@@ -186,7 +186,7 @@ export default function ConnectionsEditor({ notify }: { notify: Notify }) {
         ) : (
           <ul className="space-y-2">
             {links.map((l) => (
-              <li key={l.id} className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3">
+              <li key={l.id} className="flex flex-wrap items-center gap-3 border-2 border-line bg-surface shadow-hard px-4 py-3">
                 {chip(l.source)}
                 <span className="text-muted" aria-label="connects to">
                   →

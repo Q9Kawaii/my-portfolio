@@ -5,12 +5,9 @@ import Experience from "@/components/site/Experience";
 import Footer from "@/components/site/Footer";
 import Hero from "@/components/site/Hero";
 import Intro, { introBootScript } from "@/components/site/Intro";
-import KnowledgeGraph from "@/components/site/graph/KnowledgeGraph";
 import Navbar from "@/components/site/Navbar";
 import Projects from "@/components/site/Projects";
-import Skills from "@/components/site/Skills";
 import { getContent } from "@/lib/content";
-import { buildGraph } from "@/lib/graph";
 
 // Rebuilt at most every 10 minutes, and immediately when the admin saves (see /api/revalidate).
 export const revalidate = 600;
@@ -20,7 +17,6 @@ export default async function HomePage() {
   const { projects, skills, experience, education, awards } = content;
   // Never let a hidden phone number reach the HTML or RSC payload.
   const settings = content.settings.showPhone ? content.settings : { ...content.settings, phone: "" };
-  const graph = buildGraph({ ...content, settings });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -32,16 +28,14 @@ export default async function HomePage() {
   };
 
   return (
-    <div className="backdrop-grid">
+    <>
       {/* Must come before the overlay so it runs before the overlay is painted. */}
       <script dangerouslySetInnerHTML={{ __html: introBootScript }} />
-      <Intro name={settings.name} role={settings.role} />
-      <Navbar name={settings.name} cvUrl={settings.cvUrl} />
+      <Intro name={settings.name} />
+      <Navbar name={settings.name} />
       <main id="main">
         <Hero s={settings} />
-        <About s={settings} />
-        <Skills groups={skills} />
-        <KnowledgeGraph data={graph} />
+        <About s={settings} skills={skills} />
         <Projects projects={projects} />
         <Experience experience={experience} education={education} />
         <Awards awards={awards} />
@@ -52,6 +46,6 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
-    </div>
+    </>
   );
 }

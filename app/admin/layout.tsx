@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  return <div className="backdrop-grid min-h-dvh">{children}</div>;
+  return <div className="min-h-dvh">{children}</div>;
 }

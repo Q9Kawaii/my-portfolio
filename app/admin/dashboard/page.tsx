@@ -9,6 +9,7 @@ import MessagesPanel from "@/components/admin/MessagesPanel";
 import { AreaField, LinesField, MediaField, SelectField, TagsField, TextField, Toggle } from "@/components/admin/fields";
 import SettingsEditor from "@/components/admin/SettingsEditor";
 import { useAdmin } from "@/components/admin/useAdmin";
+import ThemeToggle from "@/components/ThemeToggle";
 import { importDefaults, loadSettings, publish } from "@/lib/admin-client";
 import { auth } from "@/lib/firebase";
 import { inferGraphGroup } from "@/lib/graph";
@@ -29,7 +30,7 @@ type TabId = (typeof TABS)[number]["id"];
 const Badge = ({ children, tone = "line" }: { children: React.ReactNode; tone?: "accent" | "line" | "warn" }) => (
   <span
     className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-      tone === "accent" ? "bg-accent text-bg" : tone === "warn" ? "bg-[#fb923c] text-bg" : "border border-line text-text"
+      tone === "accent" ? "bg-accent text-bg" : tone === "warn" ? "bg-warn text-bg" : "border border-line text-text"
     }`}
   >
     {children}
@@ -85,11 +86,12 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-dvh">
-      <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b-2 border-line bg-bg">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
-          <p className="font-display text-lg font-semibold text-text">Portfolio admin</p>
+          <p className="font-display text-base font-bold text-text">&gt; portfolio_admin</p>
           <div className="flex items-center gap-2">
             <span className="hidden text-sm text-muted md:inline">{state.user.email}</span>
+            <ThemeToggle />
             <a
               href="/"
               target="_blank"
@@ -110,7 +112,7 @@ export default function Dashboard() {
 
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
         {!seeded ? (
-          <section className="rounded-2xl border border-accent/50 bg-surface p-6">
+          <section className="border-2 border-accent bg-surface shadow-hard p-6">
             <h1 className="font-display text-2xl font-semibold text-text">Import your content</h1>
             <p className="mt-2 max-w-2xl text-muted">
               The live site currently shows the built-in content (from your resume, LinkedIn and GitHub). Import it into
@@ -121,7 +123,7 @@ export default function Dashboard() {
               type="button"
               onClick={doImport}
               disabled={importing}
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-2.5 font-semibold text-bg disabled:opacity-60"
+              className="mt-5 inline-flex items-center gap-2 rounded-lg border-2 border-line bg-accent px-5 py-2.5 font-display font-semibold text-bg shadow-hard-sm disabled:opacity-60"
             >
               {importing && <Loader2 size={16} className="animate-spin" aria-hidden />} Import defaults
             </button>

@@ -137,7 +137,7 @@ export default function CollectionEditor<T extends Item>({
         <button
           type="button"
           onClick={add}
-          className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg hover:brightness-110"
+          className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px"
         >
           <Plus size={18} aria-hidden /> Add
         </button>
@@ -150,7 +150,7 @@ export default function CollectionEditor<T extends Item>({
           const isOpen = open === item.id;
           const isDirty = dirty.has(item.id);
           return (
-            <li key={item.id} className="rounded-xl border border-line bg-surface">
+            <li key={item.id} className="border-2 border-line bg-surface shadow-hard">
               <div className="flex items-center gap-2 p-3">
                 <div className="flex flex-col">
                   <button
@@ -182,7 +182,7 @@ export default function CollectionEditor<T extends Item>({
                   <span className="truncate font-medium text-text">{itemTitle(item) || "Untitled"}</span>
                   {badges?.(item)}
                   {isDirty && (
-                    <span className="rounded-full bg-[#facc15] px-2 py-0.5 text-xs font-semibold text-bg">Unsaved</span>
+                    <span className="rounded-full bg-warn px-2 py-0.5 text-xs font-semibold text-bg">Unsaved</span>
                   )}
                 </button>
               </div>
@@ -195,7 +195,7 @@ export default function CollectionEditor<T extends Item>({
                       type="button"
                       disabled={busy === item.id}
                       onClick={() => save(item)}
-                      className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg hover:brightness-110 disabled:opacity-60"
+                      className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px disabled:opacity-60"
                     >
                       {busy === item.id ? (
                         <Loader2 size={16} className="animate-spin" aria-hidden />
@@ -209,7 +209,7 @@ export default function CollectionEditor<T extends Item>({
                         <button
                           type="button"
                           onClick={() => remove(item)}
-                          className="inline-flex items-center gap-2 rounded-lg bg-danger px-4 py-2 font-semibold text-bg"
+                          className="inline-flex items-center gap-2 rounded-lg border-2 border-line bg-danger font-display shadow-hard-sm px-4 py-2 font-semibold text-bg"
                         >
                           <Trash2 size={16} aria-hidden /> Confirm delete
                         </button>
