@@ -25,6 +25,8 @@ export const metadata: Metadata = {
     images: [{ url: "/images/projects/taskmesh.webp", width: 1200, height: 750 }],
   },
   twitter: { card: "summary_large_image", creator: "@q9kawaii" },
+  // Google Search Console ownership (HTML tag method). Keep it so the property stays verified.
+  verification: { google: "BHnhHGU5BtcbSi9ygATK5l80R_UMvz2XJiNGTtor_uI" },
   // Pixel "YD" tab icon in each theme's colours; ThemeToggle keeps it in sync with the site toggle.
   // The plain PNG (and app/favicon.ico) are for Google Search and other crawlers, which
   // need an unconditional icon that's a multiple of 48px.
