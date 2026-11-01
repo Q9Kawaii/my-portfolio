@@ -1,18 +1,16 @@
 "use client";
 import { signOut } from "firebase/auth";
-import { Award, Briefcase, ExternalLink, FolderGit2, GraduationCap, Inbox, Loader2, LogOut, Network, UserRound, Wrench } from "lucide-react";
+import { Award, Briefcase, ExternalLink, FolderGit2, GraduationCap, Inbox, Loader2, LogOut, UserRound, Wrench } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import CollectionEditor, { type Notify } from "@/components/admin/CollectionEditor";
-import ConnectionsEditor from "@/components/admin/ConnectionsEditor";
 import MessagesPanel from "@/components/admin/MessagesPanel";
-import { AreaField, LinesField, MediaField, SelectField, TagsField, TextField, Toggle } from "@/components/admin/fields";
+import { AreaField, LinesField, MediaField, TagsField, TextField, Toggle } from "@/components/admin/fields";
 import SettingsEditor from "@/components/admin/SettingsEditor";
 import { useAdmin } from "@/components/admin/useAdmin";
 import ThemeToggle from "@/components/ThemeToggle";
 import { importDefaults, loadSettings, publish } from "@/lib/admin-client";
 import { auth } from "@/lib/firebase";
-import { inferGraphGroup } from "@/lib/graph";
 import type { Award as AwardT, Education, Experience, Project, SiteSettings, SkillGroup } from "@/lib/types";
 
 const TABS = [
@@ -23,7 +21,6 @@ const TABS = [
   { id: "experience", label: "Experience", Icon: Briefcase },
   { id: "education", label: "Education", Icon: GraduationCap },
   { id: "awards", label: "Awards", Icon: Award },
-  { id: "connections", label: "Graph connections", Icon: Network },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
 
@@ -161,7 +158,7 @@ export default function Dashboard() {
                   itemTitle={(p) => p.title}
                   badges={(p) => (
                     <>
-                      {p.featured ? <Badge tone="accent">Featured</Badge> : <Badge>Small card</Badge>}
+                      {p.featured ? <Badge tone="accent">Featured</Badge> : <Badge>Not featured</Badge>}
                       {p.hidden && <Badge>Hidden</Badge>}
                       {p.isPrivate && <Badge>Private</Badge>}
                       {p.imageIsPlaceholder && <Badge tone="warn">Placeholder image</Badge>}
@@ -186,18 +183,17 @@ export default function Dashboard() {
                   renderFields={(p, up) => (
                     <>
                       <div className="grid gap-4 sm:grid-cols-3">
-                        <Toggle label="Featured" help="Large card in the masonry" checked={p.featured} onChange={(v) => up({ featured: v })} />
+                        <Toggle label="Featured" help="Shown first; the rest sit behind Show more" checked={p.featured} onChange={(v) => up({ featured: v })} />
                         <Toggle label="Hidden" help="Not shown on the site" checked={p.hidden} onChange={(v) => up({ hidden: v })} />
                         <Toggle label="Private code" help="Shows a lock badge" checked={p.isPrivate} onChange={(v) => up({ isPrivate: v })} />
                       </div>
                       <div className="grid gap-4 sm:grid-cols-2">
                         <TextField label="Title" value={p.title} onChange={(v) => up({ title: v })} />
                         <TextField label="Context label" help="e.g. Internship · Company" value={p.context} onChange={(v) => up({ context: v })} />
-                        <TextField label="Year" help="Shown in the knowledge graph" value={p.year ?? ""} onChange={(v) => up({ year: v })} />
                       </div>
                       <TextField label="One-line summary" value={p.summary} onChange={(v) => up({ summary: v })} />
                       <AreaField label="Description" value={p.description} onChange={(v) => up({ description: v })} />
-                      <TagsField label="Tech stack (also links the project to skills in the graph)" value={p.tech} onChange={(v) => up({ tech: v })} />
+                      <TagsField label="Tech stack" value={p.tech} onChange={(v) => up({ tech: v })} />
                       <div className="grid gap-4 sm:grid-cols-2">
                         <TextField label="Live URL" type="url" value={p.liveUrl} onChange={(v) => up({ liveUrl: v })} />
                         <TextField label="Code URL" type="url" help="Leave empty for private repos" value={p.repoUrl} onChange={(v) => up({ repoUrl: v })} />
@@ -227,16 +223,6 @@ export default function Dashboard() {
                     <>
                       <div className="grid gap-4 sm:grid-cols-2">
                         <TextField label="Group name" value={g.name} onChange={(v) => up({ name: v })} />
-                        <SelectField
-                          label="Graph group"
-                          help="Colour and filter used in the knowledge graph"
-                          value={g.graphGroup ?? inferGraphGroup(g)}
-                          onChange={(v) => up({ graphGroup: v as "Skills" | "Tools" })}
-                          options={[
-                            { value: "Skills", label: "Skills" },
-                            { value: "Tools", label: "Tools" },
-                          ]}
-                        />
                       </div>
                       <LinesField label="Skills" value={g.items} onChange={(v) => up({ items: v })} />
                     </>
@@ -281,7 +267,6 @@ export default function Dashboard() {
                         <TextField label="Period" value={e.period} onChange={(v) => up({ period: v })} />
                       </div>
                       <AreaField label="Details" rows={3} value={e.details} onChange={(v) => up({ details: v })} />
-                      <TagsField label="Graph tags (skills this links to)" value={e.tags ?? []} onChange={(v) => up({ tags: v })} />
                     </>
                   )}
                 />
@@ -310,29 +295,18 @@ export default function Dashboard() {
                   renderFields={(a, up) => (
                     <>
                       <TextField label="Title" value={a.title} onChange={(v) => up({ title: v })} />
-                      <SelectField
-                        label="Type"
-                        value={a.kind ?? (/certif/i.test(a.title) ? "certification" : "award")}
-                        onChange={(v) => up({ kind: v as "award" | "certification" })}
-                        options={[
-                          { value: "award", label: "Award / achievement" },
-                          { value: "certification", label: "Certification" },
-                        ]}
-                      />
                       <div className="grid gap-4 sm:grid-cols-2">
                         <TextField label="Issuer" value={a.issuer} onChange={(v) => up({ issuer: v })} />
                         <TextField label="Date" value={a.date} onChange={(v) => up({ date: v })} />
                       </div>
                       <AreaField label="Description" rows={3} value={a.description} onChange={(v) => up({ description: v })} />
                       <TextField label="Certificate link" type="url" value={a.link} onChange={(v) => up({ link: v })} />
-                      <TagsField label="Graph tags (skills this links to)" value={a.tags ?? []} onChange={(v) => up({ tags: v })} />
                       <MediaField label="Image" folder="awards" value={a.image} onChange={(v) => up({ image: v, imageIsPlaceholder: false })} />
                       <TextField label="Image alt text" value={a.imageAlt} onChange={(v) => up({ imageAlt: v })} />
                     </>
                   )}
                 />
               )}
-              {tab === "connections" && <ConnectionsEditor notify={notify} />}
               {tab === "messages" && <MessagesPanel notify={notify} />}
             </section>
           </div>

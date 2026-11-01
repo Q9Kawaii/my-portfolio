@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { defaultContent } from "./defaults";
-import { COLLECTIONS, SETTINGS_DOC, type PortfolioContent, type SiteSettings } from "./types";
+import { COLLECTIONS, SETTINGS_DOC, type SiteSettings } from "./types";
 
 export type CollectionKey = keyof typeof COLLECTIONS;
 type Item = { id: string; order: number } & Record<string, unknown>;
@@ -111,60 +111,6 @@ export async function importDefaults() {
   batch.set(privateRef(), { phone: s.phone });
   batch.set(settingsRef(), { ...s, phone: s.showPhone ? s.phone : "", seeded: true });
   await batch.commit();
-}
-
-/** Everything the public site renders, as the admin currently sees it in Firestore. */
-export async function loadAll(): Promise<PortfolioContent | null> {
-  const settings = await loadSettings();
-  if (!settings) return null;
-  const [projects, skills, experience, education, awards, graphLinks] = await Promise.all([
-    loadItems("projects"),
-    loadItems("skills"),
-    loadItems("experience"),
-    loadItems("education"),
-    loadItems("awards"),
-    loadItems("graphLinks"),
-  ]);
-  return { settings, projects, skills, experience, education, awards, graphLinks } as unknown as PortfolioContent;
-}
-
-// Fields added for the knowledge graph after the first import.
-const GRAPH_FIELDS: Partial<Record<CollectionKey, string[]>> = {
-  projects: ["year"],
-  skills: ["graphGroup"],
-  education: ["tags"],
-  awards: ["kind", "tags"],
-};
-
-/**
- * Brings an older import up to date for the knowledge graph: adds the default
- * connections that don't exist yet, and fills graph fields (year, tags, kind,
- * graphGroup) only where an item with the same id doesn't have them. Never
- * overwrites anything you've edited.
- */
-export async function importGraphDefaults() {
-  const batch = writeBatch(db);
-  let writes = 0;
-  const existingLinks = new Set((await loadItems("graphLinks")).map((l) => l.id));
-  for (const { id, ...data } of defaultContent.graphLinks) {
-    if (existingLinks.has(id)) continue;
-    batch.set(doc(db, COLLECTIONS.graphLinks, id), data);
-    writes++;
-  }
-  for (const [key, fields] of Object.entries(GRAPH_FIELDS) as [CollectionKey, string[]][]) {
-    const current = new Map((await loadItems(key)).map((it) => [it.id, it]));
-    for (const def of defaultContent[key] as Item[]) {
-      const cur = current.get(def.id);
-      if (!cur) continue;
-      const patch = Object.fromEntries(fields.filter((f) => cur[f] === undefined && def[f] !== undefined).map((f) => [f, def[f]]));
-      if (Object.keys(patch).length) {
-        batch.update(doc(db, COLLECTIONS[key], def.id), patch);
-        writes++;
-      }
-    }
-  }
-  if (writes) await batch.commit();
-  return writes;
 }
 
 // ---- Contact messages (read directly: rules allow only the admin; writes go through the server) ----
