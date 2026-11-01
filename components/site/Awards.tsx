@@ -9,7 +9,7 @@ export default function Awards({ awards }: { awards: Award[] }) {
       <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {awards.map((a) => (
           <li key={a.id}>
-            <article aria-labelledby={`a-${a.id}`} className="card flex h-full flex-col">
+            <article aria-labelledby={`a-${a.id}`} className="card card-hover flex h-full flex-col">
               {a.image && (
                 // Fixed frame keeps layout stable; certificates of any shape fit inside.
                 <div className="relative aspect-[4/3] border-b-2 border-line bg-surface-2">

@@ -25,6 +25,13 @@ export const metadata: Metadata = {
     images: [{ url: "/images/projects/taskmesh.webp", width: 1200, height: 750 }],
   },
   twitter: { card: "summary_large_image", creator: "@q9kawaii" },
+  // Pixel "YD" tab icon in each theme's colours; ThemeToggle keeps it in sync with the site toggle.
+  icons: {
+    icon: [
+      { url: "/icon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+      { url: "/icon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
 };
 
 export const viewport: Viewport = {

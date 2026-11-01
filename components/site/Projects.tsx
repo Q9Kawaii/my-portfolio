@@ -6,7 +6,7 @@ import { Section, SmartImage, Tag } from "./ui";
 
 function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
   return (
-    <article aria-labelledby={`p-${p.id}`} className="card flex h-full flex-col">
+    <article aria-labelledby={`p-${p.id}`} className="card card-hover flex h-full flex-col">
       {p.image && (
         <div className="relative aspect-[16/10] w-full overflow-hidden border-b-2 border-line bg-surface-2">
           <SmartImage

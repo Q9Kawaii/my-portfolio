@@ -1,6 +1,6 @@
 import { MapPin } from "lucide-react";
 import type { SiteSettings, SkillGroup } from "@/lib/types";
-import { Section, SmartImage, Tag } from "./ui";
+import { Section, SmartImage } from "./ui";
 
 export default function About({ s, skills }: { s: SiteSettings; skills: SkillGroup[] }) {
   const paragraphs = s.bio.split(/\n\s*\n/).filter(Boolean);
@@ -49,7 +49,7 @@ export default function About({ s, skills }: { s: SiteSettings; skills: SkillGro
               <ul className="mt-4 flex flex-wrap gap-2">
                 {tags.map((t) => (
                   <li key={t}>
-                    <Tag>{t}</Tag>
+                    <span className="tag tag-hover">{t}</span>
                   </li>
                 ))}
               </ul>
