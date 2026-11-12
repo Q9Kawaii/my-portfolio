@@ -7,13 +7,15 @@ import Hero from "@/components/site/Hero";
 import Intro, { introBootScript } from "@/components/site/Intro";
 import Navbar from "@/components/site/Navbar";
 import Projects from "@/components/site/Projects";
+import Testimonials from "@/components/site/Testimonials";
 import { getContent } from "@/lib/content";
+import { getApprovedTestimonials } from "@/lib/testimonials-server";
 
 // Rebuilt at most every 10 minutes, and immediately when the admin saves (see /api/revalidate).
 export const revalidate = 600;
 
 export default async function HomePage() {
-  const content = await getContent();
+  const [content, testimonials] = await Promise.all([getContent(), getApprovedTestimonials()]);
   const { projects, skills, experience, education, awards } = content;
   // Never let a hidden phone number reach the HTML or RSC payload.
   const settings = content.settings.showPhone ? content.settings : { ...content.settings, phone: "" };
@@ -39,6 +41,7 @@ export default async function HomePage() {
         <Projects projects={projects} />
         <Experience experience={experience} education={education} />
         <Awards awards={awards} />
+        <Testimonials items={testimonials} />
         <Contact s={settings} />
       </main>
       <Footer s={settings} />

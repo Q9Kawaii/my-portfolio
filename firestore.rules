@@ -35,6 +35,12 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Testimonials. Submitted, listed, approved and deleted only through /api/testimonials
+    // (Admin SDK); clients never touch the collection. Same as the default deny, spelled out.
+    match /testimonials/{docId} {
+      allow read, write: if false;
+    }
+
     // Admin-only data, e.g. the phone number while it is hidden from the public site.
     match /portfolioPrivate/{docId} {
       allow read, write: if isAdmin();
