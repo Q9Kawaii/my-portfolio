@@ -6,11 +6,11 @@ import { SmartImage, WRAP } from "./ui";
 export default function Hero({ s }: { s: SiteSettings }) {
   return (
     <section id="top" aria-label="Introduction" className="relative overflow-hidden border-b border-line">
-      {/* Soft accent glow behind the hero; purely decorative. */}
+      {/* Soft accent glow behind the hero; purely decorative. A plain gradient: a blur filter leaves artifacts. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, var(--accent-soft), transparent)" }}
+        className="pointer-events-none absolute inset-x-0 top-0 h-[560px]"
+        style={{ background: "radial-gradient(60% 70% at 50% 0%, var(--accent-soft), transparent 75%)" }}
       />
       <div className={`${WRAP} relative grid items-center gap-12 pb-16 pt-32 md:grid-cols-[1.4fr_1fr] md:pb-24 md:pt-40`}>
         <div>
