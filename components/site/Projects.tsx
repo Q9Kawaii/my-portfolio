@@ -1,5 +1,6 @@
 "use client";
-import { ArrowUpRight, Github, Lock } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Github, Lock, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import type { Project } from "@/lib/types";
 import { Section, SmartImage, Tag, exhibit } from "./ui";
@@ -162,6 +163,26 @@ export default function Projects({ projects }: { projects: Project[] }) {
           </button>
         </div>
       )}
+
+      <Link
+        href="/lab"
+        className="group mt-20 flex flex-col gap-4 border border-line bg-bg p-6 transition-colors hover:border-accent sm:flex-row sm:items-center sm:justify-between md:mt-24 md:p-8"
+      >
+        <span className="flex items-start gap-5">
+          <ShieldCheck size={28} className="mt-1 shrink-0 text-accent" aria-hidden />
+          <span>
+            <span className="mono-label">Security lab</span>
+            <span className="h3 mt-1 block text-2xl text-text sm:text-3xl">Evidence you can run</span>
+            <span className="mt-2 block max-w-[56ch] leading-relaxed text-muted">
+              Five interactive demos: check your site&apos;s security headers, test a password against known breaches, and watch
+              SQL injection and XSS fail against fixed code.
+            </span>
+          </span>
+        </span>
+        <span className="btn btn-primary btn-sm shrink-0 self-start sm:self-center">
+          Open the lab <ArrowRight size={14} aria-hidden />
+        </span>
+      </Link>
     </Section>
   );
 }

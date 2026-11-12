@@ -14,6 +14,9 @@ export default function Footer({ s }: { s: SiteSettings }) {
           © {new Date().getFullYear()} {s.name} <span aria-hidden className="mx-1.5 text-line">/</span> End of file
         </p>
         <div className="-ml-2 flex items-center gap-2 sm:ml-0">
+          <Link href="/lab" className="link-draw px-2 py-2.5 hover:text-text">
+            Security lab
+          </Link>
           <Link href="/services" className="link-draw px-2 py-2.5 hover:text-text">
             Services
           </Link>
