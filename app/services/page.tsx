@@ -2,6 +2,7 @@ import { Check, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Section, WRAP } from "@/components/site/ui";
+import { DEMOS } from "@/lib/demos";
 import { PLANS, PROCESS, SERVICE_AREAS, SERVICES_CONTACT, inr } from "@/lib/services";
 
 export const metadata: Metadata = {
@@ -87,6 +88,36 @@ export default function ServicesPage() {
           securely by Razorpay. By paying you agree to the <Link href="/services/terms" className="text-accent underline underline-offset-4">Terms</Link>,{" "}
           <Link href="/services/refund" className="text-accent underline underline-offset-4">Refund Policy</Link> and{" "}
           <Link href="/services/privacy" className="text-accent underline underline-offset-4">Privacy Policy</Link>.
+        </p>
+      </Section>
+
+      <Section
+        id="samples"
+        eyebrow="Sample work"
+        title="Try a demo"
+        intro="Working demos for made-up businesses. Click around: bookings, filters and forms all work."
+      >
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {DEMOS.map((d) => (
+            <li key={d.slug}>
+              <Link href={`/demos/${d.slug}`} className="card card-hover group flex h-full flex-col p-5">
+                <span aria-hidden className="mb-4 flex h-2 overflow-hidden">
+                  {d.swatch.map((c) => (
+                    <span key={c} className="flex-1" style={{ background: c }} />
+                  ))}
+                </span>
+                <span className="mono-label">{d.kind}</span>
+                <span className="mt-1 text-lg font-semibold text-text group-hover:text-accent">{d.business}</span>
+                <span className="mt-2 text-sm leading-relaxed text-muted">{d.summary}</span>
+                <span className="mt-auto pt-4 text-sm font-semibold text-accent">Open demo →</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6">
+          <Link href="/demos" className="text-sm text-accent underline underline-offset-4">
+            See all demos
+          </Link>
         </p>
       </Section>
 
