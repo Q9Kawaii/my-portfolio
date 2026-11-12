@@ -1,8 +1,8 @@
 import Image, { type ImageProps } from "next/image";
 import type { ReactNode } from "react";
 
-/** Shared page width: ~1000px content with wide side margins. */
-export const WRAP = "mx-auto w-full max-w-[1000px] px-4 sm:px-8";
+/** Shared page width. */
+export const WRAP = "mx-auto w-full max-w-[1120px] px-5 sm:px-8";
 
 export function Section({
   id,
@@ -10,21 +10,30 @@ export function Section({
   title,
   intro,
   children,
+  tinted = false,
 }: {
   id: string;
   eyebrow: string;
   title: string;
   intro?: string;
   children: ReactNode;
+  /** Alternate background band to separate long pages into clear blocks. */
+  tinted?: boolean;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={`${WRAP} py-20 md:py-32`}>
-      <p className="label">{eyebrow}</p>
-      <h2 id={`${id}-title`} className="mt-3 font-display text-2xl font-bold tracking-tight text-text sm:text-3xl">
-        {title}
-      </h2>
-      {intro && <p className="mt-4 max-w-[60ch] text-lg leading-relaxed text-muted">{intro}</p>}
-      <div className="mt-12">{children}</div>
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className={tinted ? "border-y border-line bg-surface-2" : undefined}
+    >
+      <div className={`${WRAP} py-20 md:py-24`}>
+        <p className="label">{eyebrow}</p>
+        <h2 id={`${id}-title`} className="mt-3 text-3xl font-semibold tracking-tight text-text sm:text-[2.1rem]">
+          {title}
+        </h2>
+        {intro && <p className="mt-4 max-w-[62ch] text-lg leading-relaxed text-muted">{intro}</p>}
+        <div className="mt-12">{children}</div>
+      </div>
     </section>
   );
 }

@@ -1,60 +1,61 @@
 @import "tailwindcss";
 
 /*
- * Retro / flat palette. Light = cream paper + ink + rust brown; dark = charcoal + off-white + amber.
- * Body copy (--muted) stays above 9:1 and the accent above 6:1 against --bg in both themes.
+ * Professional palette: white / slate with a deep blue accent; dark = near-black navy with a soft blue.
+ * Body copy (--muted) stays above 7:1 and the accent above 4.5:1 against --bg in both themes.
  * The theme is set on <html data-theme> by an inline script before first paint (see app/layout.tsx).
+ * Token names are shared with the admin dashboard, so it picks up the same look.
  */
 :root {
-  --bg: #f4efe4;
-  --surface: #fbf8f1;
-  --surface-2: #ebe4d5;
-  --line: #1c1b19;
-  --line-soft: #c9c0ae;
-  --text: #141414;
-  --muted: #3b3833;
-  --accent: #8a3324;
-  --on-accent: #fbf8f1;
-  --danger: #a1122e;
-  --warn: #9a5b00;
-  --shadow: #141414;
-  --dot: rgb(20 20 20 / 0.11);
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f4f6fa;
+  --line: #e3e7ee;
+  --line-soft: #eef1f5;
+  --text: #0e1525;
+  --muted: #4a5568;
+  --accent: #1d4ed8;
+  --accent-soft: #eaf0ff;
+  --on-accent: #ffffff;
+  --danger: #b42318;
+  --warn: #b54708;
+  --shadow: rgb(16 24 40 / 0.08);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: #1b1b1d;
-  --surface: #232326;
-  --surface-2: #2d2d31;
-  --line: #8f897d;
-  --line-soft: #46443f;
-  --text: #f4f1ea;
-  --muted: #dad5ca;
-  --accent: #ffb000;
-  --on-accent: #1b1b1d;
-  --danger: #ff8f80;
-  --warn: #ffcc66;
-  --shadow: #8a5f00;
-  --dot: rgb(244 241 234 / 0.07);
+  --bg: #0a0e17;
+  --surface: #111724;
+  --surface-2: #161e2e;
+  --line: #222b3c;
+  --line-soft: #1a2232;
+  --text: #f1f4f9;
+  --muted: #a3adbf;
+  --accent: #6ea0ff;
+  --accent-soft: #15213a;
+  --on-accent: #0a0e17;
+  --danger: #ff8a80;
+  --warn: #fdb022;
+  --shadow: rgb(0 0 0 / 0.4);
   color-scheme: dark;
 }
 
 /* No-JS fallback: follow the system theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bg: #1b1b1d;
-    --surface: #232326;
-    --surface-2: #2d2d31;
-    --line: #8f897d;
-    --line-soft: #46443f;
-    --text: #f4f1ea;
-    --muted: #dad5ca;
-    --accent: #ffb000;
-    --on-accent: #1b1b1d;
-    --danger: #ff8f80;
-    --warn: #ffcc66;
-    --shadow: #8a5f00;
-  --dot: rgb(244 241 234 / 0.07);
+    --bg: #0a0e17;
+    --surface: #111724;
+    --surface-2: #161e2e;
+    --line: #222b3c;
+    --line-soft: #1a2232;
+    --text: #f1f4f9;
+    --muted: #a3adbf;
+    --accent: #6ea0ff;
+    --accent-soft: #15213a;
+    --on-accent: #0a0e17;
+    --danger: #ff8a80;
+    --warn: #fdb022;
+    --shadow: rgb(0 0 0 / 0.4);
     color-scheme: dark;
   }
 }
@@ -68,22 +69,23 @@
   --color-text: var(--text);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
   --color-danger: var(--danger);
   --color-warn: var(--warn);
-  --font-sans: var(--font-plex), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-space-mono), ui-monospace, monospace;
-  --font-mono: var(--font-space-mono), ui-monospace, monospace;
-  --font-pixel: var(--font-vt323), ui-monospace, monospace;
-  /* Flat, squared-off corners everywhere (admin included). */
-  --radius-sm: 2px;
-  --radius-md: 3px;
-  --radius-lg: 4px;
-  --radius-xl: 4px;
-  --radius-2xl: 6px;
-  --shadow-hard: 4px 4px 0 0 var(--shadow);
-  --shadow-hard-sm: 2px 2px 0 0 var(--shadow);
-  --shadow-lg: 4px 4px 0 0 var(--shadow);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-pixel: var(--font-jetbrains), ui-monospace, monospace;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  /* Old "hard" shadow utilities are now soft, so every component (admin included) follows the new look. */
+  --shadow-hard: 0 1px 2px var(--shadow), 0 8px 24px -12px var(--shadow);
+  --shadow-hard-sm: 0 1px 2px var(--shadow);
+  --shadow-lg: 0 1px 2px var(--shadow), 0 16px 40px -16px var(--shadow);
 }
 
 html {
@@ -93,12 +95,11 @@ html {
 
 body {
   background-color: var(--bg);
-  /* Faint retro dot grid in both themes. */
-  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px);
-  background-size: 24px 24px;
   color: var(--text);
   font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -109,11 +110,12 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 ::placeholder {
   color: var(--muted);
-  opacity: 0.75;
+  opacity: 0.7;
 }
 
 /* Theme toggle: show the icon for the theme you'd switch to, without needing React state. */
@@ -121,19 +123,16 @@ body {
 :root[data-theme="dark"] .theme-icon-sun { display: block; }
 :root[data-theme="dark"] .theme-icon-moon { display: none; }
 
-/* Dark theme adds a soft film grain on top of the dot grid. */
-:root[data-theme="dark"] body {
-  background-image:
-    radial-gradient(var(--dot) 1px, transparent 1.3px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .09 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 24px 24px, 180px 180px;
-}
+/* Rounded, softly bordered controls everywhere (also tames the admin's 2px borders). */
+.border-2 { border-width: 1px; }
+input, textarea, select { border-radius: var(--radius-md); }
 
 @layer components {
   .card {
-    border: 2px solid var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
     background: var(--surface);
-    box-shadow: var(--shadow-hard);
+    box-shadow: var(--shadow-hard-sm);
   }
 
   .btn {
@@ -141,111 +140,78 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    border: 2px solid var(--line);
-    padding: 0.7rem 1.15rem;
-    font-family: var(--font-display);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    padding: 0.65rem 1.1rem;
+    font-family: var(--font-sans);
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.2;
-    box-shadow: var(--shadow-hard-sm);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  .btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 0 var(--shadow);
-  }
-  .btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
   }
   .btn-primary {
     background: var(--accent);
     color: var(--on-accent);
+    box-shadow: 0 1px 2px var(--shadow);
+  }
+  .btn-primary:hover {
+    background: color-mix(in srgb, var(--accent) 88%, var(--text));
   }
   .btn-ghost {
     background: var(--surface);
+    border-color: var(--line);
     color: var(--text);
   }
+  .btn-ghost:hover {
+    border-color: color-mix(in srgb, var(--line) 50%, var(--muted));
+    background: var(--surface-2);
+  }
   .btn-sm {
-    padding: 0.45rem 0.75rem;
+    padding: 0.45rem 0.8rem;
     font-size: 0.8rem;
   }
 
   .tag {
     display: inline-flex;
     align-items: center;
-    border: 1px solid var(--line);
-    padding: 0.2rem 0.55rem;
-    font-family: var(--font-display);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
     font-size: 0.75rem;
-    line-height: 1.4;
-    color: var(--text);
-    background: var(--bg);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--muted);
+    background: var(--surface-2);
+    border: 1px solid var(--line-soft);
   }
-
-  /* Skill tags light up in the accent colour on hover. */
   .tag-hover {
     cursor: default;
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    transition: color 0.15s ease, border-color 0.15s ease;
   }
   .tag-hover:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--on-accent);
-    transform: translateY(-1px);
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
-  /* Project cards: a small lift and a slightly longer shadow. */
   .card-hover {
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .card-hover:hover,
   .card-hover:focus-within {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 0 var(--shadow);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: color-mix(in srgb, var(--line) 60%, var(--muted));
   }
 
   .label {
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--accent);
   }
 }
 
-/* ---------- Intro: ~1 s retro boot line, first visit per session only ---------- */
-.intro-overlay { display: none; }
-html[data-intro="play"] .intro-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  animation: intro-out 0.2s steps(4) 0.85s both;
-}
-.intro-type {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  width: 0;
-  vertical-align: bottom;
-  animation: intro-type 0.55s steps(var(--n)) 0.1s forwards;
-}
-.intro-cursor { animation: intro-blink 0.3s steps(1) infinite; }
-html:not([data-intro="play"]) .intro-overlay * { animation: none; }
-
-@keyframes intro-type { to { width: calc(var(--n) * 1ch); } }
-@keyframes intro-blink { 50% { opacity: 0; } }
-@keyframes intro-out {
-  from { opacity: 1; }
-  to { opacity: 0; visibility: hidden; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  html[data-intro="play"] .intro-overlay { display: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

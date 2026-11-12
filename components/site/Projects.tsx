@@ -6,24 +6,29 @@ import { Section, SmartImage, Tag } from "./ui";
 
 function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
   return (
-    <article aria-labelledby={`p-${p.id}`} className="card card-hover flex h-full flex-col">
+    <article aria-labelledby={`p-${p.id}`} className="card card-hover group flex h-full flex-col">
       {p.image && (
-        <div className="relative aspect-[16/10] w-full overflow-hidden border-b-2 border-line bg-surface-2">
+        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-t-[11px] border-b border-line bg-surface-2">
           <SmartImage
             src={p.image}
             alt={p.imageAlt || `${p.title} screenshot`}
             fill
             priority={priority}
             sizes="(min-width: 1000px) 320px, (min-width: 640px) 50vw, 100vw"
-            className="object-cover object-top"
+            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </div>
       )}
       <div className="flex flex-1 flex-col p-5">
-        <h3 id={`p-${p.id}`} className="font-display text-base font-bold text-text">
+        {(p.context || p.year) && (
+          <p className="mb-1.5 text-xs font-medium text-muted">
+            {[p.context, p.year].filter(Boolean).join(" · ")}
+          </p>
+        )}
+        <h3 id={`p-${p.id}`} className="text-lg font-semibold tracking-tight text-text">
           {p.title}
         </h3>
-        <p className="mt-2 leading-relaxed text-muted">{p.summary}</p>
+        <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{p.summary}</p>
         {p.tech.length > 0 && (
           <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
             {p.tech.slice(0, 5).map((t) => (
@@ -47,7 +52,7 @@ function ProjectCard({ p, priority }: { p: Project; priority: boolean }) {
             </a>
           )}
           {p.isPrivate && !p.repoUrl && (
-            <span className="inline-flex items-center gap-1.5 font-display text-xs text-muted">
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted">
               <Lock size={13} aria-hidden /> Private code
             </span>
           )}
@@ -69,8 +74,14 @@ export default function Projects({ projects }: { projects: Project[] }) {
   const shown = showAll ? [...initial, ...rest] : initial;
 
   return (
-    <Section id="projects" eyebrow="02 / Projects" title="Selected work">
-      <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <Section
+      id="projects"
+      eyebrow="Projects"
+      title="Selected work"
+      intro="Products I have designed and built end to end, from access control to deployment."
+      tinted
+    >
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((p, i) => (
           <li key={p.id}>
             <ProjectCard p={p} priority={i < 2} />

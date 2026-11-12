@@ -6,7 +6,7 @@ import { CONTACT_LIMITS, validateContact, type ContactInput } from "@/lib/contac
 type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 
 const field =
-  "w-full border-2 border-line bg-bg px-4 py-3 text-text focus:border-accent focus:outline-none";
+  "w-full rounded-lg border border-line bg-bg px-4 py-2.5 text-text transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15";
 
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
@@ -88,11 +88,11 @@ export default function ContactForm({ fallbackEmail }: { fallbackEmail: string }
     <form onSubmit={onSubmit} className="card relative space-y-5 p-6 sm:p-8">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="mb-2 block font-display text-xs font-bold uppercase tracking-wider text-text">Name</span>
+          <span className="mb-1.5 block text-sm font-medium text-text">Name</span>
           <input name="name" required maxLength={CONTACT_LIMITS.name} autoComplete="name" className={field} placeholder="Your name" />
         </label>
         <label className="block">
-          <span className="mb-2 block font-display text-xs font-bold uppercase tracking-wider text-text">Email</span>
+          <span className="mb-1.5 block text-sm font-medium text-text">Email</span>
           <input
             name="email"
             type="email"
@@ -105,7 +105,7 @@ export default function ContactForm({ fallbackEmail }: { fallbackEmail: string }
         </label>
       </div>
       <label className="block">
-        <span className="mb-2 block font-display text-xs font-bold uppercase tracking-wider text-text">Message</span>
+        <span className="mb-1.5 block text-sm font-medium text-text">Message</span>
         <textarea
           name="message"
           required
@@ -125,7 +125,7 @@ export default function ContactForm({ fallbackEmail }: { fallbackEmail: string }
         {status.kind === "sending" ? <Loader2 size={18} className="animate-spin" aria-hidden /> : <Send size={18} aria-hidden />}
         {status.kind === "sending" ? "Sending…" : "Send message"}
       </button>
-      <p role="status" aria-live="polite" className={`font-display text-sm ${status.kind === "error" ? "text-danger" : "text-accent"}`}>
+      <p role="status" aria-live="polite" className={`text-sm font-medium ${status.kind === "error" ? "text-danger" : "text-accent"}`}>
         {status.message}
       </p>
     </form>
