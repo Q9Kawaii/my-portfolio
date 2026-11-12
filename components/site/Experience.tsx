@@ -2,6 +2,14 @@ import { ArrowUpRight } from "lucide-react";
 import type { Education, Experience as Exp } from "@/lib/types";
 import { Section } from "./ui";
 
+function hostOf(url: string) {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
+}
+
 /** A ledger row: period in the margin, entry on the right, dashed rule between entries. */
 const ROW = "grid gap-3 border-b border-dashed border-line py-9 md:grid-cols-[230px_1fr] md:gap-10";
 
@@ -51,7 +59,8 @@ export default function Experience({ experience, education }: { experience: Exp[
                         rel="noopener noreferrer"
                         className="link-draw mt-5 inline-flex items-center gap-1 font-mono text-xs font-semibold uppercase tracking-[0.1em] text-accent"
                       >
-                        Visit {e.org.split(/[,(]/)[0].trim()} <ArrowUpRight size={14} aria-hidden />
+                        {/* Name the site the link opens (it isn't always the organisation's own). */}
+                        Visit {hostOf(e.link)} <ArrowUpRight size={14} aria-hidden />
                       </a>
                     )}
                   </div>

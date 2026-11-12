@@ -72,7 +72,7 @@ export default function Intro({ name }: { name: string }) {
           <span className="display text-[1.9rem] leading-none">{initials}</span>
           <span className="h-1 w-9 bg-accent" />
         </span>
-        <p className="intro-name font-mono text-xs uppercase tracking-[0.16em] text-muted">Opening file · {name}</p>
+        <p className="intro-name font-mono text-xs uppercase tracking-[0.16em] text-muted">Opening file</p>
         <span className="intro-bar block h-0.5 w-32 overflow-hidden rounded-full bg-line">
           <span className="block h-full w-full origin-left rounded-full bg-accent" />
         </span>

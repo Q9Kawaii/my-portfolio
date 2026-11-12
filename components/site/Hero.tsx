@@ -25,7 +25,6 @@ function redactHeadline(text: string): ReactNode {
 
 function FileCard({ s }: { s: SiteSettings }) {
   const rows: [string, string][] = [
-    ["Subject", s.name],
     ["Role", s.role],
     ["Base", s.location],
     ["Status", s.availability],

@@ -74,11 +74,10 @@ export default function Navbar({ name, cvUrl }: { name: string; cvUrl?: string }
           Skip to content
         </a>
         <nav aria-label="Primary" className={`${WRAP} flex h-16 items-center justify-between`}>
-          <a href="#top" className="flex min-h-11 items-center gap-2.5 font-semibold text-text">
+          <a href="#top" aria-label={`${name}, back to top`} className="flex min-h-11 items-center gap-2.5 font-semibold text-text">
             <span className="grid size-8 place-items-center bg-ink font-mono text-[0.7rem] font-semibold text-on-ink">
               {initials}
             </span>
-            <span className="hidden font-mono text-xs uppercase tracking-[0.14em] sm:inline">{name}</span>
           </a>
 
           <div className="flex items-center gap-2">
