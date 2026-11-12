@@ -211,7 +211,58 @@ input, textarea, select { border-radius: var(--radius-md); }
   }
 }
 
+/* ---------- Theme switch (see components/themeTransition.ts) ---------- */
+/* View Transitions: no default cross-fade; the new theme is revealed by an expanding circle. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) { z-index: 2; }
+/* Fallback for browsers without View Transitions: colours ease over briefly. */
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease !important;
+}
+
+/* ---------- Intro: ~1.1 s logo reveal, first visit per session only ---------- */
+.intro-overlay { display: none; }
+html[data-intro="play"] .intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  animation: intro-out 0.35s ease 0.95s both;
+}
+html[data-intro="play"] .intro-mark { animation: intro-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+html[data-intro="play"] .intro-name { animation: intro-rise 0.4s ease 0.18s both; }
+html[data-intro="play"] .intro-bar > span { animation: intro-fill 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both; }
+html:not([data-intro="play"]) .intro-overlay * { animation: none; }
+
+@keyframes intro-pop {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes intro-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes intro-out {
+  from { opacity: 1; }
+  to { opacity: 0; visibility: hidden; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html[data-intro="play"] .intro-overlay { display: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

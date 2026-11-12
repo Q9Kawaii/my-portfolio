@@ -4,6 +4,7 @@ import Contact from "@/components/site/Contact";
 import Experience from "@/components/site/Experience";
 import Footer from "@/components/site/Footer";
 import Hero from "@/components/site/Hero";
+import Intro, { introBootScript } from "@/components/site/Intro";
 import Navbar from "@/components/site/Navbar";
 import Projects from "@/components/site/Projects";
 import { getContent } from "@/lib/content";
@@ -28,6 +29,9 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* Must come before the overlay so it runs before the overlay is painted. */}
+      <script dangerouslySetInnerHTML={{ __html: introBootScript }} />
+      <Intro name={settings.name} />
       <Navbar name={settings.name} />
       <main id="main">
         <Hero s={settings} />
