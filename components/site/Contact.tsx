@@ -1,4 +1,5 @@
 import { Mail, Phone } from "lucide-react";
+import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
 import ContactForm from "./ContactForm";
 import SocialLinks from "./SocialLinks";
@@ -33,6 +34,12 @@ export default function Contact({ s }: { s: SiteSettings }) {
           <div className="pt-3">
             <SocialLinks socials={s.socials} />
           </div>
+          <p className="pt-3 text-sm text-muted">
+            Need a website or app built?{" "}
+            <Link href="/services" className="font-display text-text underline underline-offset-4 hover:text-accent">
+              Freelance services →
+            </Link>
+          </p>
         </div>
         <ContactForm fallbackEmail={s.email} />
       </div>

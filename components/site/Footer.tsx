@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
 import { WRAP } from "./ui";
 
@@ -8,9 +9,14 @@ export default function Footer({ s }: { s: SiteSettings }) {
         <p>
           © {new Date().getFullYear()} {s.name}
         </p>
-        <a href="#top" className="text-text underline-offset-4 hover:text-accent hover:underline">
-          ↑ back to top
-        </a>
+        <div className="flex items-center gap-5">
+          <Link href="/services" className="text-muted underline-offset-4 hover:text-accent hover:underline">
+            services
+          </Link>
+          <a href="#top" className="text-text underline-offset-4 hover:text-accent hover:underline">
+            ↑ back to top
+          </a>
+        </div>
       </div>
     </footer>
   );
