@@ -274,7 +274,7 @@ export const defaultContent: PortfolioContent = {
         "Implemented RBAC, secure authentication and Firestore security rules to protect sensitive student records across 4+ user roles.",
         "Automated verification workflows, reducing manual administrative effort by roughly 40–60%.",
       ],
-      link: "https://www.yashdingar.xyz",
+      link: "https://shineportal.online",
     },
   ],
 

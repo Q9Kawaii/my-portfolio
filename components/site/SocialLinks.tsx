@@ -21,7 +21,7 @@ export default function SocialLinks({ socials, size = 18 }: { socials: Socials; 
             rel="noopener noreferrer"
             aria-label={label}
             title={label}
-            className="grid size-10 place-items-center rounded-lg border border-line bg-surface text-muted shadow-hard-sm transition hover:border-accent/40 hover:text-accent"
+            className="grid size-11 place-items-center rounded-[var(--radius-md)] border border-line text-muted transition-colors hover:border-accent/40 hover:text-accent"
           >
             <Icon size={size} aria-hidden />
           </a>

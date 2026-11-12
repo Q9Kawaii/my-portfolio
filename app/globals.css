@@ -1,61 +1,68 @@
 @import "tailwindcss";
 
 /*
- * Professional palette: white / slate with a deep blue accent; dark = near-black navy with a soft blue.
+ * "Case file" palette. Light = archive paper, ink and an oxblood stamp colour.
+ * Dark = carbon paper with amber (the same pair as components/pixelTransition.ts).
  * Body copy (--muted) stays above 7:1 and the accent above 4.5:1 against --bg in both themes.
  * The theme is set on <html data-theme> by an inline script before first paint (see app/layout.tsx).
  * Token names are shared with the admin dashboard, so it picks up the same look.
  */
 :root {
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --surface-2: #f4f6fa;
-  --line: #e3e7ee;
-  --line-soft: #eef1f5;
-  --text: #0e1525;
-  --muted: #4a5568;
-  --accent: #1d4ed8;
-  --accent-soft: #eaf0ff;
-  --on-accent: #ffffff;
-  --danger: #b42318;
-  --warn: #b54708;
-  --shadow: rgb(16 24 40 / 0.08);
+  --bg: #f4efe4;
+  --surface: #faf7f0;
+  --surface-2: #ebe4d4;
+  --line: #d3c9b4;
+  --line-soft: #e2dac8;
+  --text: #141414;
+  --muted: #4b463d;
+  --accent: #8a3324;
+  --accent-soft: #ecd9cf;
+  --on-accent: #faf7f0;
+  --ink: #141414; /* redaction bars and the solid button */
+  --on-ink: #f4efe4;
+  --danger: #a12a1c;
+  --warn: #8a4b06;
+  --shadow: rgb(60 45 20 / 0.12);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: #0a0e17;
-  --surface: #111724;
-  --surface-2: #161e2e;
-  --line: #222b3c;
-  --line-soft: #1a2232;
-  --text: #f1f4f9;
-  --muted: #a3adbf;
-  --accent: #6ea0ff;
-  --accent-soft: #15213a;
-  --on-accent: #0a0e17;
-  --danger: #ff8a80;
+  --bg: #1b1b1d;
+  --surface: #222225;
+  --surface-2: #29292d;
+  --line: #3b3a3f;
+  --line-soft: #303034;
+  --text: #f4f1ea;
+  --muted: #b5afa4;
+  --accent: #ffb000;
+  --accent-soft: #3a2f14;
+  --on-accent: #1b1b1d;
+  --ink: #f4f1ea;
+  --on-ink: #1b1b1d;
+  --danger: #ff8a73;
   --warn: #fdb022;
-  --shadow: rgb(0 0 0 / 0.4);
+  --shadow: rgb(0 0 0 / 0.45);
   color-scheme: dark;
 }
 
 /* No-JS fallback: follow the system theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bg: #0a0e17;
-    --surface: #111724;
-    --surface-2: #161e2e;
-    --line: #222b3c;
-    --line-soft: #1a2232;
-    --text: #f1f4f9;
-    --muted: #a3adbf;
-    --accent: #6ea0ff;
-    --accent-soft: #15213a;
-    --on-accent: #0a0e17;
-    --danger: #ff8a80;
+    --bg: #1b1b1d;
+    --surface: #222225;
+    --surface-2: #29292d;
+    --line: #3b3a3f;
+    --line-soft: #303034;
+    --text: #f4f1ea;
+    --muted: #b5afa4;
+    --accent: #ffb000;
+    --accent-soft: #3a2f14;
+    --on-accent: #1b1b1d;
+    --ink: #f4f1ea;
+    --on-ink: #1b1b1d;
+    --danger: #ff8a73;
     --warn: #fdb022;
-    --shadow: rgb(0 0 0 / 0.4);
+    --shadow: rgb(0 0 0 / 0.45);
     color-scheme: dark;
   }
 }
@@ -71,36 +78,51 @@
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
   --color-danger: var(--danger);
   --color-warn: var(--warn);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
-  --font-pixel: var(--font-jetbrains), ui-monospace, monospace;
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
-  /* Old "hard" shadow utilities are now soft, so every component (admin included) follows the new look. */
-  --shadow-hard: 0 1px 2px var(--shadow), 0 8px 24px -12px var(--shadow);
-  --shadow-hard-sm: 0 1px 2px var(--shadow);
-  --shadow-lg: 0 1px 2px var(--shadow), 0 16px 40px -16px var(--shadow);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-pixel: var(--font-plex-mono), ui-monospace, monospace;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
+  --shadow-hard: 4px 4px 0 var(--shadow);
+  --shadow-hard-sm: 2px 2px 0 var(--shadow);
+  --shadow-lg: 6px 6px 0 var(--shadow);
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4.5rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-feature-settings: "cv11", "ss01";
+  font-size: 1rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+h1, h2, h3 { text-wrap: balance; }
+
+/* No double-tap zoom delay on controls. */
+a, button, input, textarea, select, label { touch-action: manipulation; }
+
+/* Phones: the bottom tab bar is fixed, so keep focused/jumped-to content clear of it. */
+@media (max-width: 767px) {
+  html { scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+}
+p { text-wrap: pretty; }
 
 ::selection {
   background: var(--accent);
@@ -110,7 +132,6 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 ::placeholder {
@@ -123,65 +144,123 @@ body {
 :root[data-theme="dark"] .theme-icon-sun { display: block; }
 :root[data-theme="dark"] .theme-icon-moon { display: none; }
 
-/* Rounded, softly bordered controls everywhere (also tames the admin's 2px borders). */
+/* Squared, softly bordered controls everywhere (also tames the admin's 2px borders). */
 .border-2 { border-width: 1px; }
 input, textarea, select { border-radius: var(--radius-md); }
 
 @layer components {
+  /* Headline face: Archivo squeezed to its condensed width, heavy, in caps. */
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 62%;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 0.86;
+  }
+  .h2 {
+    font-family: var(--font-display);
+    font-stretch: 68%;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    line-height: 0.92;
+  }
+  .h3 {
+    font-stretch: 85%;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+
+  /* File labels: mono, caps, spaced like a typed form. */
+  .label,
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .label { color: var(--accent); }
+
+  /* A rubber stamp: double rule, mono caps, accent ink. */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    border: 2px solid currentColor;
+    outline: 1px solid currentColor;
+    outline-offset: 2px;
+    padding: 0.3em 0.6em;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
   .card {
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     background: var(--surface);
-    box-shadow: var(--shadow-hard-sm);
   }
 
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    border: 1px solid transparent;
+    gap: 0.55rem;
+    min-height: 2.875rem;
+    border: 1.5px solid var(--ink);
     border-radius: var(--radius-md);
-    padding: 0.65rem 1.1rem;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
+    padding: 0.6rem 1.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
     font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     line-height: 1.2;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
   }
   .btn-primary {
-    background: var(--accent);
-    color: var(--on-accent);
-    box-shadow: 0 1px 2px var(--shadow);
-  }
-  .btn-primary:hover {
-    background: color-mix(in srgb, var(--accent) 88%, var(--text));
+    background: var(--ink);
+    color: var(--on-ink);
   }
   .btn-ghost {
-    background: var(--surface);
-    border-color: var(--line);
+    background: transparent;
     color: var(--text);
   }
-  .btn-ghost:hover {
-    border-color: color-mix(in srgb, var(--line) 50%, var(--muted));
-    background: var(--surface-2);
+  @media (hover: hover) {
+    .btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 3px 3px 0 var(--accent);
+    }
+  }
+  .btn:active {
+    transform: translate(0, 0);
+    box-shadow: none;
   }
   .btn-sm {
-    padding: 0.45rem 0.8rem;
-    font-size: 0.8rem;
+    min-height: 2.5rem;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.72rem;
   }
 
   .tag {
     display: inline-flex;
     align-items: center;
-    border-radius: 999px;
-    padding: 0.2rem 0.65rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1.5;
+    padding: 0.1rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.6;
     color: var(--muted);
-    background: var(--surface-2);
-    border: 1px solid var(--line-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
   }
   .tag-hover {
     cursor: default;
@@ -189,27 +268,78 @@ input, textarea, select { border-radius: var(--radius-md); }
   }
   .tag-hover:hover {
     color: var(--accent);
-    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    border-color: var(--accent);
   }
 
-  .card-hover {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  }
-  .card-hover:hover,
-  .card-hover:focus-within {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-    border-color: color-mix(in srgb, var(--line) 60%, var(--muted));
+  /* Hover only where a real pointer exists, so phones never get stuck hover states. */
+  .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  @media (hover: hover) {
+    .card-hover:hover,
+    .card-hover:focus-within {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
   }
 
-  .label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
+  /* Link whose underline draws in on hover. */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.25s ease, color 0.15s ease;
   }
+  .link-draw:hover { background-size: 100% 1.5px; }
+
+  /*
+   * Redacted text: an ink bar covers the words and slides off once on load (the page's one dealt moment).
+   * transform only, so it runs on the compositor and costs nothing on phones.
+   */
+  .redact {
+    position: relative;
+    display: inline;
+    color: var(--text);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .redact::after {
+    content: "";
+    position: absolute;
+    inset: 0.08em -0.12em;
+    background: var(--ink);
+    transform-origin: right center;
+    animation: unredact 0.55s cubic-bezier(0.7, 0, 0.2, 1) both;
+    animation-delay: var(--d, 0.9s);
+  }
+  html[data-intro="play"] .redact::after { animation-delay: calc(var(--d, 0.9s) + 1.1s); }
 }
+
+/* Paper: a faint dot grid (24px, the same cell as the pixel theme transition). Static, painted once. */
+.paper-dots {
+  background-image: radial-gradient(color-mix(in srgb, var(--text) 13%, transparent) 1px, transparent 1.3px);
+  background-size: 24px 24px;
+}
+
+@keyframes unredact {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+/* ---------- Hero entrance: once on load, transform + opacity only (cheap on phones) ---------- */
+@keyframes enter-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.enter { animation: enter-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: var(--d, 0s); }
+html[data-intro="play"] .enter { animation-delay: calc(var(--d, 0s) + 1.1s); }
+
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(var(--r, -6deg)) scale(1.6); }
+  60% { opacity: 1; transform: rotate(var(--r, -6deg)) scale(0.96); }
+  100% { opacity: 1; transform: rotate(var(--r, -6deg)) scale(1); }
+}
+.stamp-in { animation: stamp-in 0.45s cubic-bezier(0.3, 0.7, 0.3, 1) both; animation-delay: var(--d, 1.2s); }
+html[data-intro="play"] .stamp-in { animation-delay: calc(var(--d, 1.2s) + 1.1s); }
 
 /* ---------- Theme switch (see components/themeTransition.ts) ---------- */
 /* View Transitions: no default cross-fade; the new theme is revealed by an expanding circle. */
@@ -267,6 +397,7 @@ html:not([data-intro="play"]) .intro-overlay * { animation: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
   }
 }

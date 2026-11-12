@@ -6,7 +6,8 @@ import { CONTACT_LIMITS, validateContact, type ContactInput } from "@/lib/contac
 type Status = { kind: "idle" | "sending" | "ok" | "error"; message?: string };
 
 const field =
-  "w-full rounded-lg border border-line bg-bg px-4 py-2.5 text-text transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/15";
+  // text-base (16px) stops iOS Safari zooming into the field on focus.
+  "w-full rounded-[var(--radius-md)] border border-line bg-bg px-4 py-3 text-base text-text transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25";
 
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
@@ -85,17 +86,22 @@ export default function ContactForm({ fallbackEmail }: { fallbackEmail: string }
   }
 
   return (
-    <form onSubmit={onSubmit} className="card relative space-y-5 p-6 sm:p-8">
+    <form onSubmit={onSubmit} className="card relative space-y-5 p-5 shadow-[var(--shadow-hard)] sm:p-8">
+      <p className="flex items-center justify-between border-b border-dashed border-line pb-4 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-muted">
+        <span>Form CR-1 · Contact request</span>
+        <span className="text-accent">Private · never published</span>
+      </p>
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-text">Name</span>
+          <span className="mb-1.5 block font-mono text-[0.68rem] font-medium uppercase tracking-[0.12em] text-muted">Name</span>
           <input name="name" required maxLength={CONTACT_LIMITS.name} autoComplete="name" className={field} placeholder="Your name" />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-text">Email</span>
+          <span className="mb-1.5 block font-mono text-[0.68rem] font-medium uppercase tracking-[0.12em] text-muted">Email</span>
           <input
             name="email"
             type="email"
+            spellCheck={false}
             required
             maxLength={CONTACT_LIMITS.email}
             autoComplete="email"
@@ -105,7 +111,7 @@ export default function ContactForm({ fallbackEmail }: { fallbackEmail: string }
         </label>
       </div>
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-text">Message</span>
+        <span className="mb-1.5 block font-mono text-[0.68rem] font-medium uppercase tracking-[0.12em] text-muted">Message</span>
         <textarea
           name="message"
           required

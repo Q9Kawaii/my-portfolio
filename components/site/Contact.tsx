@@ -1,4 +1,4 @@
-import { Mail, Phone } from "lucide-react";
+import { ArrowUpRight, Phone } from "lucide-react";
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/types";
 import ContactForm from "./ContactForm";
@@ -9,37 +9,44 @@ export default function Contact({ s }: { s: SiteSettings }) {
   return (
     <Section
       id="contact"
+      index="05"
       eyebrow="Contact"
-      title="Let’s work together"
+      title="Open a new case"
       intro="Hiring for an internship, or want to talk about a project? Send a message and I'll get back to you."
     >
-      <div className="grid gap-12 md:grid-cols-[1fr_1.5fr]">
-        <div className="space-y-5">
+      <div className="grid gap-14 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
+        <div>
+          <p className="mono-label">Direct line</p>
           <a
             href={`mailto:${s.email}`}
-            className="flex items-center gap-3 break-all text-[0.95rem] font-medium text-text underline-offset-4 hover:text-accent hover:underline"
+            className="link-draw mt-3 inline-block break-all text-2xl font-semibold tracking-[-0.02em] text-text [font-stretch:85%] hover:text-accent sm:text-3xl"
           >
-            <Mail className="shrink-0 text-accent" size={18} aria-hidden />
             {s.email}
           </a>
           {s.showPhone && s.phone && (
             <a
               href={`tel:${s.phone.replace(/[^+\d]/g, "")}`}
-              className="flex items-center gap-3 text-[0.95rem] font-medium text-text underline-offset-4 hover:text-accent hover:underline"
+              className="mt-4 flex items-center gap-2 font-mono text-sm text-text hover:text-accent"
             >
-              <Phone className="shrink-0 text-accent" size={18} aria-hidden />
+              <Phone className="shrink-0 text-accent" size={16} aria-hidden />
               {s.phone}
             </a>
           )}
-          <div className="pt-3">
+
+          <p className="mono-label mt-10">Elsewhere</p>
+          <div className="mt-3">
             <SocialLinks socials={s.socials} />
           </div>
-          <p className="pt-3 text-sm text-muted">
-            Need a website or app built?{" "}
-            <Link href="/services" className="font-medium text-accent underline-offset-4 hover:underline">
-              Freelance services →
+
+          <div className="mt-10 border border-dashed border-line p-5">
+            <p className="mono-label">Need a website or app built?</p>
+            <Link
+              href="/services"
+              className="link-draw mt-2 inline-flex items-center gap-1 text-lg font-semibold text-accent"
+            >
+              See freelance services <ArrowUpRight size={16} aria-hidden />
             </Link>
-          </p>
+          </div>
         </div>
         <ContactForm fallbackEmail={s.email} />
       </div>
