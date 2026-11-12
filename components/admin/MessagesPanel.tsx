@@ -118,7 +118,7 @@ export default function MessagesPanel({ notify }: { notify: Notify }) {
             <p className="mt-3 whitespace-pre-wrap break-words text-[15px] leading-relaxed text-text">{m.message}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               <a
-                href={`mailto:${m.email}?subject=${encodeURIComponent("Re: your message on yashdingar.space")}`}
+                href={`mailto:${m.email}?subject=${encodeURIComponent("Re: your message on yashdingar.in")}`}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-1.5 text-sm font-semibold text-bg border-2 border-line font-display text-sm shadow-hard-sm transition hover:-translate-x-px hover:-translate-y-px"
               >
                 <Reply size={15} aria-hidden /> Reply

@@ -7,7 +7,7 @@ const plex = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], 
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-space-mono", display: "swap" });
 const vt323 = VT323({ subsets: ["latin"], weight: "400", variable: "--font-vt323", display: "swap" });
 
-const SITE_URL = "https://www.yashdingar.space";
+const SITE_URL = "https://www.yashdingar.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

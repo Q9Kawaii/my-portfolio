@@ -23,7 +23,7 @@ export default async function HomePage() {
     "@type": "Person",
     name: settings.name,
     jobTitle: settings.role,
-    url: "https://www.yashdingar.space",
+    url: "https://www.yashdingar.in",
     sameAs: Object.values(settings.socials).filter(Boolean),
   };
 

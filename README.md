@@ -2,7 +2,7 @@
 
 Personal portfolio showcasing my full-stack and security projects.
 
-**Live site:** [yashdingar.space](https://yashdingar.space)
+**Live site:** [yashdingar.in](https://www.yashdingar.in)
 
 ## Built with
 
