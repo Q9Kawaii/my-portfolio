@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { themeBootScript } from "@/components/ThemeToggle";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap" });
+// Type system ("case file"): two families, so phones download little.
+// - Archivo, one variable file with a width axis: condensed heavy caps for headlines, normal width for body.
+// - IBM Plex Mono: file labels, metadata and stamps (typewriter-adjacent, but crisp at small sizes).
+const archivo = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-archivo", display: "swap" });
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
 
 const SITE_URL = "https://www.yashdingar.in";
 
@@ -40,8 +48,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0e17" },
+    { media: "(prefers-color-scheme: light)", color: "#f4efe4" },
+    { media: "(prefers-color-scheme: dark)", color: "#1b1b1d" },
   ],
   colorScheme: "light dark",
 };
@@ -50,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrains.variable}`}
+      className={`${archivo.variable} ${plexMono.variable}`}
       // The theme and intro boot scripts set data-* attributes before hydration.
       suppressHydrationWarning
     >

@@ -32,7 +32,7 @@ export default async function HomePage() {
       {/* Must come before the overlay so it runs before the overlay is painted. */}
       <script dangerouslySetInnerHTML={{ __html: introBootScript }} />
       <Intro name={settings.name} />
-      <Navbar name={settings.name} />
+      <Navbar name={settings.name} cvUrl={settings.cvUrl} />
       <main id="main">
         <Hero s={settings} />
         <About s={settings} skills={skills} />

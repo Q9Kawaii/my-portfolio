@@ -68,10 +68,11 @@ export default function Intro({ name }: { name: string }) {
   return (
     <div ref={ref} id="intro" className="intro-overlay" aria-hidden>
       <div className="flex flex-col items-center gap-5">
-        <span className="intro-mark grid size-16 place-items-center rounded-2xl bg-accent text-xl font-bold text-on-accent shadow-lg">
-          {initials}
+        <span className="intro-mark flex size-16 flex-col items-center justify-center gap-1.5 rounded-[10px] bg-ink text-on-ink">
+          <span className="display text-[1.9rem] leading-none">{initials}</span>
+          <span className="h-1 w-9 bg-accent" />
         </span>
-        <p className="intro-name text-lg font-semibold tracking-tight text-text">{name}</p>
+        <p className="intro-name font-mono text-xs uppercase tracking-[0.16em] text-muted">Opening file · {name}</p>
         <span className="intro-bar block h-0.5 w-32 overflow-hidden rounded-full bg-line">
           <span className="block h-full w-full origin-left rounded-full bg-accent" />
         </span>
