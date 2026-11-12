@@ -58,11 +58,13 @@ function human(seconds: number) {
     [60, "minutes"],
     [1, "seconds"],
   ];
-  if (seconds > 3.15e11) return "longer than the age of the universe";
+  if (seconds > 4.3e17) return "in more time than the universe has existed";
   for (const [s, name] of units) {
     if (seconds >= s) {
       const n = seconds / s;
-      return name === "centuries" ? `${Math.round(n / 100).toLocaleString("en-IN")} centuries` : `${Math.round(n).toLocaleString("en-IN")} ${name}`;
+      return name === "centuries"
+        ? `in about ${Math.max(1, Math.round(n / 100)).toLocaleString("en-IN")} centuries`
+        : `in about ${Math.round(n).toLocaleString("en-IN")} ${name}`;
     }
   }
   return "instantly";
@@ -105,7 +107,7 @@ export default function PasswordCheck() {
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
       <div>
         <label htmlFor="pw" className="mono-label">
           Password to test
@@ -145,7 +147,7 @@ export default function PasswordCheck() {
               ))}
             </div>
             <p className="mt-4 text-muted">
-              An attacker with a stolen password database could guess it in about <strong className="text-text">{human(a.seconds)}</strong>.
+              An attacker with a stolen password database could guess it <strong className="text-text">{human(a.seconds)}</strong>.
             </p>
             {a.issues.length > 0 && (
               <ul className="mt-4 space-y-2">

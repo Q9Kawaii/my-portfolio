@@ -148,7 +148,7 @@ export default function AccessPlayground() {
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
       <div>
         <p className="mono-label">1. Sign in as</p>
         <div className="mt-3 grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label="Acting user">

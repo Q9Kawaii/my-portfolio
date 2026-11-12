@@ -133,7 +133,7 @@ export default function JwtInspector() {
       <div aria-live="polite">
         {r && "error" in r && <p className="mt-6 border-l-2 border-danger pl-4 text-danger">{r.error}</p>}
         {r && "findings" in r && r.findings && (
-          <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+          <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
             <div className="space-y-4">
               {(
                 [
