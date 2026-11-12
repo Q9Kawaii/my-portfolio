@@ -18,9 +18,9 @@ Personal portfolio showcasing my full-stack and security projects.
 
 ## Features
 
-- **Retro, flat design:** Space Mono / IBM Plex Sans, 2px borders and hard offset shadows. Light (cream + rust) and dark (charcoal + amber) themes follow the system setting, remember the visitor's choice and never flash on load.
-- **Hero atom:** one small draggable 3D atom (mouse, touch or arrow keys). three.js is lazy-loaded, pauses when off-screen and respects `prefers-reduced-motion`.
-- **Intro:** a ~1 s typed terminal line, once per session, skippable (Skip/Esc) and skipped for reduced motion. Pure CSS from first paint, so SEO is unaffected.
+- **Clean, professional design:** Inter, soft borders and shadows, rounded cards and a deep-blue accent. Light and dark themes follow the system setting, remember the visitor's choice and never flash on load.
+- **Hero:** availability badge, role, headline, portrait and key stats, with CV download and social links.
+- **Freelance services:** `/services` with fixed-price plans paid through Razorpay Payment Pages, plus Terms, Privacy, Refund, Delivery and Contact pages.
 - **Projects:** featured projects first, the rest behind a Show more button.
 - **Content managed from `/admin`:** profile, social links, CV, projects (featured / hidden / order), skills, experience, education and awards. Saving updates the live site within seconds with no redeploy.
 - **Contact form:** each message is emailed via Web3Forms straight from the browser and backed up to Firestore `messages` through `/api/messages` (validated and rate-limited). It counts as sent if either succeeds. You can read, mark and delete messages in Admin → Messages.

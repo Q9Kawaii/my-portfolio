@@ -16,8 +16,8 @@ export default function ServicesPage() {
   return (
     <>
       <section className={`${WRAP} pb-4 pt-16 md:pt-24`}>
-        <p className="label">&gt; freelance</p>
-        <h1 className="mt-4 max-w-[22ch] font-display text-3xl font-bold leading-[1.15] tracking-tight text-text sm:text-4xl">
+        <p className="label">Freelance</p>
+        <h1 className="mt-4 max-w-[22ch] text-3xl font-semibold leading-[1.15] tracking-tight text-text sm:text-4xl">
           Websites and software, built properly.
         </h1>
         <p className="mt-5 max-w-[60ch] text-lg leading-relaxed text-muted">
@@ -34,11 +34,11 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <Section id="what" eyebrow="01 / Services" title="What I can build for you">
+      <Section id="what" eyebrow="Services" title="What I can build for you">
         <div className="grid gap-5 sm:grid-cols-2">
           {SERVICE_AREAS.map((a) => (
             <div key={a.title} className="card p-6">
-              <h3 className="font-display text-base font-bold text-text">{a.title}</h3>
+              <h3 className="text-base font-semibold text-text">{a.title}</h3>
               <p className="mt-2 leading-relaxed text-muted">{a.description}</p>
             </div>
           ))}
@@ -47,16 +47,16 @@ export default function ServicesPage() {
 
       <Section
         id="pricing"
-        eyebrow="02 / Pricing"
+        eyebrow="Pricing"
         title="Clear, upfront pricing"
         intro="Base prices for each service. If your project needs more, the written quote says so and I send a payment link for that exact amount."
       >
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PLANS.map((p) => (
-            <div key={p.id} className={`card flex flex-col p-6 ${p.featured ? "outline outline-2 outline-offset-4 outline-accent" : ""}`}>
-              <h3 className="font-display text-base font-bold text-text">{p.name}</h3>
+            <div key={p.id} className={`card flex flex-col p-6 ${p.featured ? "ring-2 ring-accent" : ""}`}>
+              <h3 className="text-base font-semibold text-text">{p.name}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{p.blurb}</p>
-              <p className="mt-5 font-display text-2xl font-bold text-text">
+              <p className="mt-5 text-2xl font-semibold text-text">
                 {inr(p.price)}
                 {p.unit && <span className="text-sm font-normal text-muted"> {p.unit}</span>}
               </p>
@@ -90,12 +90,12 @@ export default function ServicesPage() {
         </p>
       </Section>
 
-      <Section id="process" eyebrow="03 / Process" title="How it works">
+      <Section id="process" eyebrow="Process" title="How it works">
         <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PROCESS.map((step, i) => (
             <li key={step.title} className="border-l-2 border-line pl-4">
-              <p className="font-display text-sm text-accent">0{i + 1}</p>
-              <h3 className="mt-1 font-display text-base font-bold text-text">{step.title}</h3>
+              <p className="text-sm text-accent">0{i + 1}</p>
+              <h3 className="mt-1 text-base font-semibold text-text">{step.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
             </li>
           ))}
@@ -105,7 +105,7 @@ export default function ServicesPage() {
       <section className={`${WRAP} pb-24`}>
         <div className="card flex flex-col items-start gap-4 p-8 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-display text-xl font-bold text-text">Have a project in mind?</h2>
+            <h2 className="text-xl font-semibold text-text">Have a project in mind?</h2>
             <p className="mt-2 text-muted">Email me what you need. I usually reply within a day.</p>
           </div>
           <a href={mailto} className="btn btn-primary">
