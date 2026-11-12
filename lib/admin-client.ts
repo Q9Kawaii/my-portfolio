@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { defaultContent } from "./defaults";
+import type { Testimonial } from "./testimonials";
 import { COLLECTIONS, SETTINGS_DOC, type SiteSettings } from "./types";
 
 export type CollectionKey = keyof typeof COLLECTIONS;
@@ -151,6 +152,24 @@ async function messageAction(method: "PATCH" | "DELETE", body: Record<string, un
 
 export const setMessageRead = (id: string, read: boolean) => messageAction("PATCH", { id, read });
 export const deleteMessage = (id: string) => messageAction("DELETE", { id });
+
+// ---- Testimonials (all through the server: Firestore rules deny client access) ----
+
+async function testimonialFetch(method: "GET" | "PATCH" | "DELETE", body?: Record<string, unknown>) {
+  const res = await fetch("/api/testimonials", {
+    method,
+    headers: { Authorization: `Bearer ${await idToken()}`, ...(body ? { "Content-Type": "application/json" } : {}) },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || "Request failed.");
+  return json;
+}
+
+export const loadTestimonials = async (): Promise<Testimonial[]> => (await testimonialFetch("GET")).items;
+export const updateTestimonial = (id: string, patch: Partial<Pick<Testimonial, "status" | "quote" | "role" | "company" | "project">>) =>
+  testimonialFetch("PATCH", { id, ...patch });
+export const deleteTestimonial = (id: string) => testimonialFetch("DELETE", { id });
 
 export const newId = () =>
   Date.now().toString(36) + Math.random().toString(36).slice(2, 8);

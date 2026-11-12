@@ -1,10 +1,11 @@
 "use client";
 import { signOut } from "firebase/auth";
-import { Award, Briefcase, ExternalLink, FolderGit2, GraduationCap, Inbox, Loader2, LogOut, UserRound, Wrench } from "lucide-react";
+import { Award, Briefcase, ExternalLink, FolderGit2, GraduationCap, Inbox, Loader2, LogOut, Quote, UserRound, Wrench } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import CollectionEditor, { type Notify } from "@/components/admin/CollectionEditor";
 import MessagesPanel from "@/components/admin/MessagesPanel";
+import TestimonialsPanel from "@/components/admin/TestimonialsPanel";
 import { AreaField, LinesField, MediaField, TagsField, TextField, Toggle } from "@/components/admin/fields";
 import SettingsEditor from "@/components/admin/SettingsEditor";
 import { useAdmin } from "@/components/admin/useAdmin";
@@ -15,6 +16,7 @@ import type { Award as AwardT, Education, Experience, Project, SiteSettings, Ski
 
 const TABS = [
   { id: "messages", label: "Messages", Icon: Inbox },
+  { id: "testimonials", label: "Testimonials", Icon: Quote },
   { id: "profile", label: "Profile & links", Icon: UserRound },
   { id: "projects", label: "Projects", Icon: FolderGit2 },
   { id: "skills", label: "Skills", Icon: Wrench },
@@ -308,6 +310,7 @@ export default function Dashboard() {
                 />
               )}
               {tab === "messages" && <MessagesPanel notify={notify} />}
+              {tab === "testimonials" && <TestimonialsPanel notify={notify} />}
             </section>
           </div>
         )}

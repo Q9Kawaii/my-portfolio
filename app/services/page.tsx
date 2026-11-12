@@ -1,8 +1,10 @@
 import { Check, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Testimonials from "@/components/site/Testimonials";
 import { Section, WRAP } from "@/components/site/ui";
 import { DEMOS } from "@/lib/demos";
+import { getApprovedTestimonials } from "@/lib/testimonials-server";
 import { PLANS, PROCESS, SERVICE_AREAS, SERVICES_CONTACT, inr } from "@/lib/services";
 
 export const metadata: Metadata = {
@@ -11,8 +13,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-export default function ServicesPage() {
+// Rebuilt at most every 10 minutes, and immediately when a testimonial is approved (see /api/testimonials).
+export const revalidate = 600;
+
+export default async function ServicesPage() {
   const mailto = `mailto:${SERVICES_CONTACT.email}?subject=${encodeURIComponent("Project enquiry")}`;
+  const testimonials = await getApprovedTestimonials(6);
 
   return (
     <>
@@ -120,6 +126,8 @@ export default function ServicesPage() {
           </Link>
         </p>
       </Section>
+
+      <Testimonials items={testimonials} />
 
       <Section id="process" eyebrow="Process" title="How it works">
         <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
