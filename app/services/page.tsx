@@ -1,6 +1,7 @@
 import { Check, Mail, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import CopyEmailButton from "@/components/site/CopyEmailButton";
 import Testimonials from "@/components/site/Testimonials";
 import { Section, WRAP } from "@/components/site/ui";
 import { DEMOS } from "@/lib/demos";
@@ -224,9 +225,7 @@ export default async function ServicesPage() {
             <h2 className="text-xl font-semibold text-text">Have a project in mind?</h2>
             <p className="mt-2 text-muted">Email me what you need. I usually reply within a day.</p>
           </div>
-          <a href={mailto} className="btn btn-primary">
-            <Mail size={16} aria-hidden /> {SERVICES_CONTACT.email}
-          </a>
+          <CopyEmailButton email={SERVICES_CONTACT.email} />
         </div>
       </section>
     </>
