@@ -6,7 +6,13 @@ export const SERVICES_CONTACT = {
   email: "yashdingar17@gmail.com",
   location: "India",
   updated: "12 November 2026",
+  /** WhatsApp number in international format, digits only (used for wa.me links). */
+  whatsapp: "917007651602",
 };
+
+/** wa.me link that opens a chat with a pre-filled message. */
+export const whatsappLink = (message: string) =>
+  `https://wa.me/${SERVICES_CONTACT.whatsapp}?text=${encodeURIComponent(message)}`;
 
 export type Plan = {
   id: string;

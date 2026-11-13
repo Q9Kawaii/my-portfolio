@@ -8,6 +8,7 @@ import Intro, { introBootScript } from "@/components/site/Intro";
 import Navbar from "@/components/site/Navbar";
 import Projects from "@/components/site/Projects";
 import Testimonials from "@/components/site/Testimonials";
+import WhatsAppButton from "@/components/site/WhatsAppButton";
 import { getContent } from "@/lib/content";
 import { getApprovedTestimonials } from "@/lib/testimonials-server";
 
@@ -45,6 +46,7 @@ export default async function HomePage() {
         <Contact s={settings} />
       </main>
       <Footer s={settings} />
+      <WhatsAppButton message="Hi Yash, I found your portfolio and wanted to get in touch." aboveTabBar />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}

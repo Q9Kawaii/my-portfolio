@@ -1,5 +1,6 @@
 "use client";
 import { Award, Briefcase, Download, FolderOpen, Mail, User } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggle from "../ThemeToggle";
 import { WRAP } from "./ui";
@@ -97,6 +98,18 @@ export default function Navbar({ name, cvUrl }: { name: string; cvUrl?: string }
                 </li>
               ))}
             </ul>
+            {/* Highlighted: the way to hire me for a project. Accent fill + live dot sets it apart from section links. */}
+            <Link
+              href="/services"
+              className="inline-flex min-h-10 items-center gap-2 bg-accent px-3 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-on-accent shadow-[var(--shadow-hard-sm)] transition-transform hover:-translate-y-px md:ml-2 md:px-3.5"
+            >
+              <span aria-hidden className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-current opacity-70" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-current" />
+              </span>
+              <span className="sm:hidden">Hire me</span>
+              <span className="hidden sm:inline">Freelance</span>
+            </Link>
             {cvUrl && (
               <a href={cvUrl} download className="btn btn-ghost btn-sm md:hidden" aria-label="Download CV">
                 <Download size={14} aria-hidden /> CV

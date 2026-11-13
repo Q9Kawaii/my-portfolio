@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
+import WhatsAppButton from "@/components/site/WhatsAppButton";
 import { WRAP } from "@/components/site/ui";
 import { POLICY_LINKS, SERVICES_CONTACT } from "@/lib/services";
 
@@ -40,6 +41,7 @@ export default function ServicesLayout({ children }: { children: React.ReactNode
           </ul>
         </div>
       </footer>
+      <WhatsAppButton message="Hi Yash, I'm interested in your freelance services. Can we talk about a project?" />
     </>
   );
 }
