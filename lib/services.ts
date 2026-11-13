@@ -68,7 +68,25 @@ export const SERVICE_AREAS = [
   { title: "Web applications", description: "Dashboards, portals and booking tools with logins, databases and admin panels." },
   { title: "Custom software", description: "Scripts and tools that automate repetitive work and connect your systems." },
   { title: "Fixes & maintenance", description: "Bug fixes, speed improvements and small changes to an existing site or app." },
+  { title: "Security check-up", description: "A review of a site or app you already have: find the security holes and get a clear plan to fix them." },
 ];
+
+/** The security check-up service: what's checked, and what you get. Quoted per project. */
+export const SECURITY_AUDIT = {
+  checks: [
+    "Security headers, HTTPS and cookie settings",
+    "Login, sessions and password handling",
+    "Access control: can users see or change data that isn't theirs?",
+    "Injection and XSS in forms, search boxes and URLs",
+    "Database and Firebase / Supabase security rules",
+    "Exposed secrets, admin pages and outdated dependencies",
+  ],
+  deliverables: [
+    "A plain-language report ranked by risk",
+    "Step-by-step fixes, or I fix them for you",
+    "A free re-check after the fixes",
+  ],
+};
 
 export const PROCESS = [
   { title: "Discuss", description: "Tell me what you need over email. I'll ask the right questions." },

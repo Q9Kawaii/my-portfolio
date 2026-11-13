@@ -1,6 +1,8 @@
 import { ArrowUpRight, Phone } from "lucide-react";
 import Link from "next/link";
+import { whatsappLink } from "@/lib/services";
 import type { SiteSettings } from "@/lib/types";
+import { WhatsAppIcon } from "./WhatsAppButton";
 import ContactForm from "./ContactForm";
 import SocialLinks from "./SocialLinks";
 import { Section } from "./ui";
@@ -38,27 +40,39 @@ export default function Contact({ s }: { s: SiteSettings }) {
             <SocialLinks socials={s.socials} />
           </div>
 
-          {/* Freelance callout: solid accent card so it reads as the main way to hire me for a project. */}
-          <Link
-            href="/services"
-            className="group relative mt-10 block overflow-hidden bg-accent p-6 text-on-accent shadow-[var(--shadow-hard)] transition-transform hover:-translate-y-0.5"
-          >
-            <span className="inline-flex items-center gap-2 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.14em]">
+          {/* Freelance callout: solid accent card, the main way to hire me for a project. */}
+          <div className="relative mt-10 overflow-hidden bg-accent p-6 text-on-accent shadow-[var(--shadow-hard)]">
+            <p className="inline-flex items-center gap-2 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.14em]">
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-current opacity-60" />
                 <span className="relative inline-flex size-2 rounded-full bg-current" />
               </span>
               Available for freelance
-            </span>
-            <span className="h3 mt-3 block text-2xl sm:text-3xl">Need a website or app built?</span>
-            <span className="mt-2 block max-w-[42ch] leading-relaxed opacity-90">
-              Websites, web apps and custom software. Fixed quotes, pay securely online, starting at ₹499.
-            </span>
-            <span className="mt-5 inline-flex items-center gap-2 border-[1.5px] border-current px-4 py-2 font-mono text-[0.75rem] font-semibold uppercase tracking-[0.08em]">
-              See services &amp; pricing
-              <ArrowUpRight size={15} aria-hidden className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </span>
-          </Link>
+            </p>
+            <p className="h3 mt-3 text-2xl sm:text-3xl">Need a website or app built?</p>
+            <p className="mt-2 max-w-[42ch] leading-relaxed opacity-90">
+              Websites, web apps and custom software, plus security check-ups for sites you already have. Fixed quotes,
+              pay securely online, starting at ₹499.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <Link
+                href="/services"
+                className="group inline-flex min-h-11 items-center gap-2 border-[1.5px] border-current px-4 py-2 font-mono text-[0.75rem] font-semibold uppercase tracking-[0.08em] transition-colors hover:bg-on-accent hover:text-accent"
+              >
+                See services &amp; pricing
+                <ArrowUpRight size={15} aria-hidden className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+              <a
+                href={whatsappLink("Hi Yash, I found your portfolio and I'd like to talk about a project.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#25D366] py-2 pl-2.5 pr-4 text-sm font-semibold text-white shadow-[0_4px_14px_rgb(0_0_0/0.22)] transition-transform hover:-translate-y-0.5"
+              >
+                <WhatsAppIcon size={22} />
+                Chat on WhatsApp
+              </a>
+            </div>
+          </div>
         </div>
         <ContactForm fallbackEmail={s.email} />
       </div>
