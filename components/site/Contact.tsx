@@ -38,15 +38,27 @@ export default function Contact({ s }: { s: SiteSettings }) {
             <SocialLinks socials={s.socials} />
           </div>
 
-          <div className="mt-10 border border-dashed border-line p-5">
-            <p className="mono-label">Need a website or app built?</p>
-            <Link
-              href="/services"
-              className="link-draw mt-2 inline-flex items-center gap-1 text-lg font-semibold text-accent"
-            >
-              See freelance services <ArrowUpRight size={16} aria-hidden />
-            </Link>
-          </div>
+          {/* Freelance callout: solid accent card so it reads as the main way to hire me for a project. */}
+          <Link
+            href="/services"
+            className="group relative mt-10 block overflow-hidden bg-accent p-6 text-on-accent shadow-[var(--shadow-hard)] transition-transform hover:-translate-y-0.5"
+          >
+            <span className="inline-flex items-center gap-2 font-mono text-[0.68rem] font-semibold uppercase tracking-[0.14em]">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-current opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-current" />
+              </span>
+              Available for freelance
+            </span>
+            <span className="h3 mt-3 block text-2xl sm:text-3xl">Need a website or app built?</span>
+            <span className="mt-2 block max-w-[42ch] leading-relaxed opacity-90">
+              Websites, web apps and custom software. Fixed quotes, pay securely online, starting at ₹499.
+            </span>
+            <span className="mt-5 inline-flex items-center gap-2 border-[1.5px] border-current px-4 py-2 font-mono text-[0.75rem] font-semibold uppercase tracking-[0.08em]">
+              See services &amp; pricing
+              <ArrowUpRight size={15} aria-hidden className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </span>
+          </Link>
         </div>
         <ContactForm fallbackEmail={s.email} />
       </div>

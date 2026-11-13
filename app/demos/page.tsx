@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import SubPageShell from "@/components/site/SubPageShell";
+import WhatsAppButton from "@/components/site/WhatsAppButton";
 import { WRAP } from "@/components/site/ui";
 import { DEMOS, demoPlan } from "@/lib/demos";
 import { inr } from "@/lib/services";
@@ -95,6 +96,7 @@ export default function DemosIndex() {
           needed, a real database, login and payments.
         </p>
       </section>
+      <WhatsAppButton message="Hi Yash, I was looking at your demos and I'd like a website or app for my business." />
     </SubPageShell>
   );
 }
